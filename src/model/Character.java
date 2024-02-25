@@ -1,7 +1,7 @@
 package model;
 
 public abstract class Character {
-	private String name;
+	protected String name;
 	private int maxHealth;
 	private int health;
 	private int strength;
@@ -98,4 +98,10 @@ public abstract class Character {
 		return random < speed;
 	}
 
+	@Override
+	public String toString() {
+		return "Character [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", strength=" + strength
+				+ ", energy=" + energy + ", speed=" + speed + ", experience=" + experience + "]";
+	}
+	
 }
