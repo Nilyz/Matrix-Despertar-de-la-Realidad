@@ -6,7 +6,7 @@ public class Player extends Character{
 
     public Player(String name, int maxHealth, int strength, int energy, int speed, int experience, int level) {
         super(name, maxHealth, strength, energy, speed, experience);
-        this.level = level;
+		this.level = level;
     }
 
 	public int getLevel() {

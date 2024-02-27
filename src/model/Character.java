@@ -103,5 +103,5 @@ public abstract class Character {
 		return "Character [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", strength=" + strength
 				+ ", energy=" + energy + ", speed=" + speed + ", experience=" + experience + "]";
 	}
-	
+
 }
