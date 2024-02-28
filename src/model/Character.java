@@ -101,7 +101,13 @@ public abstract class Character {
 	@Override
 	public String toString() {
 		return "Character [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", strength=" + strength
-				+ ", energy=" + energy + ", speed=" + speed + ", experience=" + experience + "]";
+				+ ", energy=" + energy + ", speed=" + speed + ", experience=" + experience + ", getName()=" + getName()
+				+ ", getMaxHealth()=" + getMaxHealth() + ", getHealth()=" + getHealth() + ", getStrength()="
+				+ getStrength() + ", getEnergy()=" + getEnergy() + ", getSpeed()=" + getSpeed() + ", getExperience()="
+				+ getExperience() + ", isCriticalAttack()=" + isCriticalAttack() + ", getClass()=" + getClass()
+				+ ", hashCode()=" + hashCode() + ", toString()=" + super.toString() + "]";
 	}
+
+	
 
 }
