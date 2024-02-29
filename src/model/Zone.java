@@ -57,15 +57,14 @@ public class Zone {
 				int enemyExp = (int) (Math.random() * 5) + 1;
 				int eName = (int) (Math.random() * enemyName.length);
 				int dropProb = (int) (Math.random() * 10) + 1;
-				Agent enemy = new Agent(enemyName[eName], enemyHP, enemyStrenght, enemyEnergy, enemyVelocity, enemyExp,
+				Agent agente = new Agent(enemyName[eName], enemyHP, enemyStrenght, enemyEnergy, enemyVelocity, enemyExp,
 						0);
 
-				System.out.println(dropProb);
 				//hay un 30% de que haya drop
 				if (dropProb <= 3) {
-					enemy.addDroppableItem(generarItem());
+					agente.addDroppableItem(generarItem());
 				} 
-				agents.add(enemy);
+				agents.add(agente);
 			}
 		} else if (district == district.SECTOR_RESIDENCIAL) {
 
@@ -77,6 +76,7 @@ public class Zone {
 		
 	}
 
+	//recuerda cambiar luego los stats de los items
 	public static Item generarItem() {
 		Item newItem = new Item("Strength Belt", 5, 0, 0);
 		Item newItem2 = new Item("Enhancement Chips", 0, 10, 0);
@@ -96,10 +96,12 @@ public class Zone {
 		Item itemList[] = { newItem, newItem2, newItem3, newItem4, newItem5, newItem6, newItem7,
 				newItem8, newItem9, newItem10, newItem11, newItem12, newItem13, newItem14, newItem15 };
 		int randomItem = (int) (Math.random() * itemList.length);
-		System.out.println("item "+randomItem);
 		return itemList[randomItem];
 	}
 
+	
+	
+	
 	// recuerda eliminar
 	public void verZona() {
 		System.out.println("zona: " + name);
