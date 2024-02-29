@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class Agent extends Enemy {
 	private ArrayList<Item> droppableItems;
 
+	
 	public Agent(String name, int maxHealth, int strength, int energy, int speed, int experience,int aparitionProbability) {
 		super(name, maxHealth, strength, energy, speed, experience, aparitionProbability);
 		this.droppableItems = new ArrayList<>();
@@ -27,5 +28,6 @@ public class Agent extends Enemy {
 	public String toString() {
 		return name + "[droppableItems=" + droppableItems + "]aparitionProbability=" + aparitionProbability;
 	}
-
+	
+	
 }
