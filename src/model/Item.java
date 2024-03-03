@@ -45,7 +45,17 @@ public class Item {
 	public void setSpeed(int speed) {
 		this.speed = speed;
 	}
-
+	
+	public void seeItem() {
+		System.out.print(name+": ");
+		if(strength!=0) {
+			System.out.print(" Fuerza = "+ strength);
+		}else if(energy!=0) {
+			System.out.print(" Energia = "+energy);
+		}else if(speed!=0) {
+			System.out.print(" Velocidad = "+ speed);
+		}
+	}
 	@Override
 	public String toString() {
 		return "Item [name=" + name + ", strength=" + strength + ", energy=" + energy + ", speed=" + speed + "]";

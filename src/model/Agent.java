@@ -23,6 +23,14 @@ public class Agent extends Enemy {
 	public void addDroppableItem(Item item) {
 		droppableItems.add(item);
 	}
+	
+	//el enemigo solo tiene 1 item
+	 public Item dropItem() { 
+		 if (droppableItems.isEmpty()) {
+		        return null; // Devuelve null si no hay ningún ítem dropeable
+		    }
+		 return droppableItems.get(0);
+	    }
 
 	@Override
 	public String toString() {
