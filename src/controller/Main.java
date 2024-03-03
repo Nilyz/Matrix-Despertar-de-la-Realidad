@@ -20,7 +20,7 @@ public class Main {
 
 		Battle lucha = new Battle();
 		
-
+		
 		for (Agent currentAgent : zone1.getAgents()) {
 			lucha.menuBattle();
 			int option;

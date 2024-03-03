@@ -14,6 +14,22 @@ public class Battle {
 		System.out.println("4. Ver stats");
 
 	}
+	
+	public static void battleOptions(int option, Player player, Agent agent) {
+
+		switch (option) {
+		case 1:
+			fight(player, agent);
+			break;
+		case 2:
+			menuUseItems(player);
+			break;
+		case 3:
+			break;
+		case 4:
+			break;
+		}
+	}
 
 	public static void menuUseItems(Player player) {
 
@@ -28,7 +44,6 @@ public class Battle {
 		        
 
 		        // Pedir al jugador que elija un ítem
-		        System.out.print("Selecciona el número del ítem: ");
 		        int choice = sc.nextInt();
 
 		        // Verificar si la opción elegida es válida
@@ -47,21 +62,8 @@ public class Battle {
 	    System.out.println("Usaste el ítem: " + item.getName());
 	}
 
-	public static void battleOptions(int option, Player player, Agent agent) {
+	
 
-		switch (option) {
-		case 1:
-			fight(player, agent);
-			break;
-		case 2:
-			menuUseItems(player);
-			break;
-		case 3:
-			break;
-		case 4:
-			break;
-		}
-	}
 
 	public static void fight(Player player, Agent agent) {
 
