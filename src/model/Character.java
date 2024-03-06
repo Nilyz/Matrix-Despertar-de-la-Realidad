@@ -5,20 +5,16 @@ public abstract class Character {
 	private int maxHealth;
 	private int health;
 	private int strength;
-	private int energy;
-	private int speed;
 	private int experience;
 
 	public Character() {
 	}
 
-	public Character(String name, int maxHealth, int strength, int energy, int speed, int experience) {
+	public Character(String name, int maxHealth, int strength, int experience) {
 		this.name = name;
 		this.maxHealth = maxHealth;
 		this.health = maxHealth;
 		this.strength = strength;
-		this.energy = energy;
-		this.speed = speed;
 		this.experience = experience;
 	}
 
@@ -59,21 +55,6 @@ public abstract class Character {
 		this.strength = strength;
 	}
 
-	public int getEnergy() {
-		return energy;
-	}
-
-	public void setEnergy(int energy) {
-		this.energy = energy;
-	}
-
-	public int getSpeed() {
-		return speed;
-	}
-
-	public void setSpeed(int speed) {
-		this.speed = speed;
-	}
 
 	public int getExperience() {
 		return experience;
@@ -93,16 +74,14 @@ public abstract class Character {
 		return attack;
 	}
 
-	public boolean isCriticalAttack() {
-		int random = (int) (Math.random() * 25);
-		return random < speed;
-	}
 
 	@Override
 	public String toString() {
 		return "Character [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", strength=" + strength
-				+ ", energy=" + energy + ", speed=" + speed + ", experience=" + experience + "]";
+				+ ", experience=" + experience + "]";
 	}
+
+
 
 	
 

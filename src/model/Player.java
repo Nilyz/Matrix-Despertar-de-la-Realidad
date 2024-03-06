@@ -5,12 +5,16 @@ import java.util.ArrayList;
 public class Player extends Character {
 
 	private int level;
-	private int luck;
+	private int energy;
+	private int speed;
+
 	private ArrayList<Item> items;
 
 	public Player(String name, int maxHealth, int strength, int energy, int speed, int experience, int level) {
-		super(name, maxHealth, strength, energy, speed, experience);
+		super(name, maxHealth, strength, experience);
 		this.level = level;
+		this.energy=energy;
+		this.speed=speed;
 		this.items = new ArrayList<>();
 	}
 
@@ -27,13 +31,20 @@ public class Player extends Character {
 	public void setLevel(int level) {
 		this.level = level;
 	}
-
-	public int getLuck() {
-		return luck;
+	public int getEnergy() {
+		return energy;
 	}
 
-	public void setLuck(int luck) {
-		this.luck = luck;
+	public void setEnergy(int energy) {
+		this.energy = energy;
+	}
+	
+	public int getSpeed() {
+		return speed;
+	}
+
+	public void setSpeed(int speed) {
+		this.speed = speed;
 	}
 
 	public ArrayList<Item> getItems() {
@@ -47,6 +58,9 @@ public class Player extends Character {
 	public void addItem(Item item) {
 		items.add(item);
 	}
+	public void deleteItem(Item item) {
+		items.remove(item);
+	}
 
 	public void seePlayerItems() {
 		for (int i = 0; i < items.size(); i++) {
@@ -56,9 +70,16 @@ public class Player extends Character {
 		}
 	}
 
+	
 	@Override
 	public String toString() {
-		return super.toString() + "Player [level=" + level + ", luck=" + luck + ", items=" + items + "]";
+		return super.toString()+"level=" + level + ", energy=" + energy + ", speed=" + speed + ", items=" + items + "]";
 	}
 
+	public boolean isCriticalAttack() {
+		int random = (int) (Math.random() * 25);
+		return random < energy;
+	}
+
+	
 }

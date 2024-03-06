@@ -4,9 +4,9 @@ public class Enemy extends Character {
 
 	protected int aparitionProbability;
 
-	public Enemy(String name, int maxHealth, int strength, int energy, int speed, int experience,
+	public Enemy(String name, int maxHealth, int strength, int experience,
 			int aparitionProbability) {
-		super(name, maxHealth, strength, energy, speed, experience);
+		super(name, maxHealth, strength, experience);
 		this.aparitionProbability = aparitionProbability;
 	}
 

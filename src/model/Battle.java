@@ -25,6 +25,7 @@ public class Battle {
 			menuUseItems(player);
 			break;
 		case 3:
+			useEXP(player);
 			break;
 		case 4:
 			break;
@@ -58,8 +59,11 @@ public class Battle {
 		        System.out.println("El inventario del jugador está vacío.");
 		    }
 	}
+	
 	public static void useItem(Player player, Item item) { 
 	    System.out.println("Usaste el ítem: " + item.getName());
+	    item.useItemStats(player,item);
+	    
 	}
 
 	
@@ -108,5 +112,9 @@ public class Battle {
 			}
 		}
 
+	}
+	public static void useEXP(Player player) {
+		System.out.println(player.getExperience());
+		
 	}
 }

@@ -5,13 +5,14 @@ public class Item {
 	private int strength;
 	private int energy;
 	private int speed;
+	private int health;
 
-	public Item(String name, int strength, int energy, int speed) {
-		super();
+	public Item(String name, int strength, int energy, int speed, int health) {
 		this.name = name;
 		this.strength = strength;
 		this.energy = energy;
 		this.speed = speed;
+		this.health=health;
 	}
 
 	public String getName() {
@@ -46,6 +47,15 @@ public class Item {
 		this.speed = speed;
 	}
 	
+	
+	public int getHealth() {
+		return health;
+	}
+
+	public void setHealth(int health) {
+		this.health = health;
+	}
+
 	public void seeItem() {
 		System.out.print(name+": ");
 		if(strength!=0) {
@@ -54,8 +64,26 @@ public class Item {
 			System.out.print(" Energia = "+energy);
 		}else if(speed!=0) {
 			System.out.print(" Velocidad = "+ speed);
+		}else if(health!=0) {
+			System.out.print(" Vida = "+ health);
 		}
 	}
+	
+	//para que retorne el stat que tiene
+	public void useItemStats(Player player,Item item) {
+		if(strength!=0) {
+			player.setStrength(player.getStrength()+item.getStrength());
+		}else if(energy!=0) {
+			player.setEnergy(player.getEnergy()+item.getEnergy());
+		}else if(speed!=0) {
+			player.setSpeed(player.getSpeed()+item.getSpeed());
+		}else if(health!=0) {
+			player.setHealth(player.getHealth()+item.getHealth());
+			
+		}
+		player.deleteItem(item);
+	}
+	
 	@Override
 	public String toString() {
 		return "Item [name=" + name + ", strength=" + strength + ", energy=" + energy + ", speed=" + speed + "]";

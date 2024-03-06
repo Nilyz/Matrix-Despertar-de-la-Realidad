@@ -45,27 +45,33 @@ public class Main {
 		zone1.verZona();
 
 		Battle lucha = new Battle();
-		
+
+		/*RepositoryASCII imagen= new RepositoryASCII();
+		System.out.println(imagen.neoArt);
+		System.out.println(imagen.srSmith);*/
+
 		
 		for (Agent currentAgent : zone1.getAgents()) {
-			lucha.menuBattle();
-			//vista.printFightOptions();
+			//lucha.menuBattle();
+			vista.printFightOptions();
 			int option;
 			// que me siga preguntando que hacer mientras que el enemigo y jugador sigan vivos
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
 				option = sc.nextInt();
-
-				// vista.printFigthVisualizer(jugador, currentAgent);
+				vista.printCharacterDialogue("negro", "hola");
+				vista.printFightVisualizer(jugador, currentAgent);
 				lucha.battleOptions(option, jugador, currentAgent);
-				lucha.menuBattle();
+				// lucha.menuBattle();
 			}
 			
 			
 			System.out.println(jugador.toString());
 			System.out.println("\nPasando al siguiente agente...");
+
 		}
 		
 		sc.close();
+		
 	}
 
 }

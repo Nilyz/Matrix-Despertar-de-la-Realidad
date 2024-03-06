@@ -6,8 +6,8 @@ public class Agent extends Enemy {
 	private ArrayList<Item> droppableItems;
 
 	
-	public Agent(String name, int maxHealth, int strength, int energy, int speed, int experience,int aparitionProbability) {
-		super(name, maxHealth, strength, energy, speed, experience, aparitionProbability);
+	public Agent(String name, int maxHealth, int strength, int energy, int experience,int aparitionProbability) {
+		super(name, maxHealth, strength, experience, aparitionProbability);
 		this.droppableItems = new ArrayList<>();
 
 	}
