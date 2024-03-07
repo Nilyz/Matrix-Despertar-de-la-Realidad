@@ -35,13 +35,13 @@ public class BattleMenu extends Menu {
 		options.append(getColoredString(texto, BLACK_BACKGROUND + WHITE + UNDERLINE + BOLD));
 		options.append(getColoredString(getBinaryLine(rightPadding))).append("\n");
 
-		String[] firstLineOptions = { "1. Atacar", "2. Usar objetos" };
+		String[] firstLineOptions = { "<1> Atacar", "<2> Usar objetos" };
 		options.append(getBinaryTextBox(firstLineOptions, width)).append("\n");
 
-		String[] secondLineOptions = { "3. Ver personaje", "4. Huir" };
+		String[] secondLineOptions = { "<3> Ver personaje", "<4> Huir" };
 		options.append(getBinaryTextBox(secondLineOptions, width)).append("\n");
 
-		String[] thirdLineOptions = { "5. Rendirse", "" };
+		String[] thirdLineOptions = { "<5> Rendirse", "" };
 		options.append(getBinaryTextBox(thirdLineOptions, width)).append("\n");
 
 		options.append(getColoredString(getBinaryLine(width)));
@@ -61,5 +61,18 @@ public class BattleMenu extends Menu {
 
 		return textBox.toString();
 	}
+	
+	//nuevos menus
+	public static void seeCharacterMenu(Player player) {
+		System.out.println("Exp: "+player.getExperience());
+		System.out.println("Qué te gustaría subir?");
+		System.out.println("<1> Vida");
+		System.out.println("<2> Fuerza");
+		System.out.println("<3> Energía");
+		System.out.println("<4> Velocidad");
+		System.out.println("<0> Salir");
+	}
 
 }
+
+	

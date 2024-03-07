@@ -3,18 +3,11 @@ package model;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import view.*;
+
 public class Battle {
 	static Scanner sc = new Scanner(System.in);
 
-	public static void menuBattle() {
-		System.out.println("\nElige una opción:");
-		System.out.println("1. Atacar");
-		System.out.println("2. Usar objetos");
-		System.out.println("3. Huir");
-		System.out.println("4. Ver stats");
-
-	}
-	
 	public static void battleOptions(int option, Player player, Agent agent) {
 
 		switch (option) {
@@ -22,52 +15,15 @@ public class Battle {
 			fight(player, agent);
 			break;
 		case 2:
-			menuUseItems(player);
+			player.menuUseItems(player);
 			break;
 		case 3:
-			useEXP(player);
+			player.useEXP(player);
 			break;
 		case 4:
 			break;
 		}
 	}
-
-	public static void menuUseItems(Player player) {
-
-		// Pide al usuario que elija un ítem
-		System.out.println("Elige un ítem para usar:");
-		ArrayList<Item> playerItems = player.getItems();
-		
-		   if (playerItems != null && !playerItems.isEmpty()) {
-		        // Mostrar los ítems disponibles
-		        
-		            player.seePlayerItems();
-		        
-
-		        // Pedir al jugador que elija un ítem
-		        int choice = sc.nextInt();
-
-		        // Verificar si la opción elegida es válida
-		        if (choice >= 1 && choice <= playerItems.size()) {
-		            Item selected = playerItems.get(choice - 1);
-		            // Usar el ítem seleccionado
-		            useItem(player, selected);
-		        } else {
-		            System.out.println("Selección inválida.");
-		        }
-		    } else {
-		        System.out.println("El inventario del jugador está vacío.");
-		    }
-	}
-	
-	public static void useItem(Player player, Item item) { 
-	    System.out.println("Usaste el ítem: " + item.getName());
-	    item.useItemStats(player,item);
-	    
-	}
-
-	
-
 
 	public static void fight(Player player, Agent agent) {
 
@@ -77,12 +33,23 @@ public class Battle {
 		boolean enemyDefeated = false;
 
 		if (!playerDefeated && !enemyDefeated) {
-			int playerDamage = player.getStrength();
-			int enemyDamage = agent.getStrength();
 
-			// Turno del jugador
-			// el Math.max devuelve el valor máximo entre los dos valores, para que no
-			// devuelva salud negativa
+			int randomCriticProb = (int) (Math.random() * 10) + 1;
+			int enemyDamage = agent.getStrength();
+			int playerDamage;
+			/* calcular prob de hacer critico según la energía */
+			if (randomCriticProb < player.getEnergy()) {
+				playerDamage = player.getCritcAttack(true);
+				System.out.println("Crítico!!");
+			} else {
+				playerDamage = player.getCritcAttack(false);
+			}
+
+			/*
+			 * Turno del jugador el Math.max devuelve el valor máximo entre los dos valores,
+			 * para que no devuelva salud negativa
+			 */
+
 			int enemyHP = Math.max(0, agent.getHealth() - playerDamage);
 			agent.setHealth(enemyHP);
 			System.out.println(player.getName() + " ataca al enemigo y causa " + playerDamage + " de daño.");
@@ -113,8 +80,5 @@ public class Battle {
 		}
 
 	}
-	public static void useEXP(Player player) {
-		System.out.println(player.getExperience());
-		
-	}
+
 }

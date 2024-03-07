@@ -43,7 +43,7 @@ public class Zone {
 	}
 
 	// Método para generar enemigos de una zona
-	public void generateEnemys(Distritos district, int cant) {
+	public void generateEnemies(Distritos district, int cant) {
 
 		if (district == district.DISTRITO_INDUSTRIAL) {
 			String enemyName[] = { "Robots de seguridad", "Obreros digitales", "Caminantes de acero",
@@ -61,7 +61,7 @@ public class Zone {
 
 				//hay un 30% de que haya drop
 				if (dropProb <= 3) {
-					agente.addDroppableItem(generarItem());
+					agente.addDroppableItem(generateItem());
 				} 
 				agents.add(agente);
 			}
@@ -76,7 +76,7 @@ public class Zone {
 	}
 
 	//recuerda cambiar luego los stats de los items
-	public static Item generarItem() {
+	public static Item generateItem() {
 		Item newItem = new Item("Strength Belt", 5, 0, 0,0);
 		Item newItem2 = new Item("Enhancement Chips", 0, 10, 0,0);
 		Item newItem3 = new Item("Speed Boots", 3, 0, 0,0);

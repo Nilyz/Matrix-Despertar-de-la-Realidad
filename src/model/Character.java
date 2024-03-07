@@ -2,10 +2,10 @@ package model;
 
 public abstract class Character {
 	protected String name;
-	private int maxHealth;
-	private int health;
-	private int strength;
-	private int experience;
+	protected int maxHealth;
+	protected int health;
+	protected int strength;
+	protected int experience;
 
 	public Character() {
 	}
@@ -66,13 +66,7 @@ public abstract class Character {
 
 	/* Metodos especificos */
 
-	public int getAttack(boolean isCritical) {
-		int attack = strength;
-		if (isCritical) {
-			attack *= 1.3;
-		}
-		return attack;
-	}
+	
 
 
 	@Override

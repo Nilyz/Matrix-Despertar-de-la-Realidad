@@ -41,7 +41,7 @@ public class Main {
 		Zone zone1 = new Zone("DISTRITO INDUSTRIAL");
 		Zone zone2 = new Zone("SECTOR RESIDENCIAL");
 
-		zone1.generateEnemys(Distritos.DISTRITO_INDUSTRIAL, 6);
+		zone1.generateEnemies(Distritos.DISTRITO_INDUSTRIAL, 6);
 		zone1.verZona();
 
 		Battle lucha = new Battle();
