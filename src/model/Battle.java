@@ -6,26 +6,80 @@ import java.util.Scanner;
 import view.*;
 
 public class Battle {
-	static Scanner sc = new Scanner(System.in);
 
-	public static void battleOptions(int option, Player player, Agent agent) {
+	private Player player;
+	private Agent agent;
+	private boolean playerDefeated = false;
+	private boolean enemyDefeated = false;
 
-		switch (option) {
-		case 1:
-			fight(player, agent);
-			break;
-		case 2:
-			player.menuUseItems(player);
-			break;
-		case 3:
-			player.useEXP(player);
-			break;
-		case 4:
-			break;
-		}
+	public Battle(Player player, Agent agent) {
+		this.player = player;
+		this.agent = agent;
 	}
 
-	public static void fight(Player player, Agent agent) {
+	public void startBattle() {
+		
+        System.out.println("¡Batalla iniciada!");
+        System.out.println("ENEMIGO: " + agent.getName());
+        System.out.println("¡Prepárate para luchar!");
+    }
+
+    public void fightTurn() {
+        if (!playerDefeated && !enemyDefeated) {
+            int playerDamage = calculatePlayerDamage();
+            int enemyDamage = agent.getStrength();
+
+            int enemyHP = Math.max(0, agent.getHealth() - playerDamage);
+            agent.setHealth(enemyHP);
+            System.out.println(player.getName() + " ataca al enemigo y causa " + playerDamage + " de daño.");
+            System.out.println("El enemigo tiene " + enemyHP + " de salud.");
+
+            if (enemyHP <= 0) {
+                handleEnemyDefeat();
+            } else {
+                int playerHP = Math.max(0, player.getHealth() - enemyDamage);
+                player.setHealth(playerHP);
+                System.out.println("El enemigo te ataca y causa " + enemyDamage + " de daño.");
+                System.out.println("Tienes " + playerHP + " de salud.");
+
+                if (playerHP <= 0) {
+                    handlePlayerDefeat();
+                }
+            }
+        }
+    }
+
+
+    private int calculatePlayerDamage() {
+        int randomCriticProb = (int) (Math.random() * 10) + 1;
+        int playerDamage;
+        //cuanto mayor sea la energía, más probabilidad de crítico
+        if (randomCriticProb < player.getEnergy()) {
+            playerDamage = player.getCritcAttack(true);
+            System.out.println("¡Golpe crítico!");
+        } else {
+            playerDamage = player.getCritcAttack(false);
+        }
+        return playerDamage;
+    }
+
+    private void handleEnemyDefeat() {
+        System.out.println("¡El enemigo ha sido derrotado!");
+        player.setExperience(player.getExperience() + agent.getExperience());
+        if (agent.dropItem() != null) {
+            player.addItem(agent.dropItem());
+        }
+        enemyDefeated = true;
+    }
+
+    private void handlePlayerDefeat() {
+        System.out.println("¡Has sido derrotado!");
+        playerDefeated = true;
+    }
+	
+	
+	
+	public void fight(Player player, Agent agent) {
 
 		System.out.println("ENEMIGO: " + agent.getName());
 

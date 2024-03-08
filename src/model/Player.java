@@ -65,15 +65,10 @@ public class Player extends Character {
 		return super.toString()+ " energy=" + energy + ", speed=" + speed + ", items=" + items + "]";
 	}
 
-	public boolean isCriticalAttack() {
-		int random = (int) (Math.random() * 25);
-		return random < energy;
-	}
+	
 
 	// funcion para gastar la exp obtenida y poder elegir cuánto y en dónde gastarla
 		public static void useEXP(Player player) {
-			BattleMenu menu = new BattleMenu();
-			menu.seeCharacterMenu(player);
 			int expOption = sc.nextInt();
 
 			switch (expOption) {
@@ -98,39 +93,35 @@ public class Player extends Character {
 			}
 
 		}
-		public static void setTheExpOption(Player player,String stat ) {
-			System.out.println("Cuánto quieres subir?");
-			int cant = sc.nextInt();
-			if (player.getExperience() >= cant) {
-		        switch (stat) {
-		            case "vida":
-		                player.setHealth(player.getHealth() + cant);
-		                System.out.println("Tu vida: " + player.getHealth());
-		                break;
-		            case "energia":
-		            	player.setEnergy(player.getEnergy() + cant);
-		                System.out.println("Tu energía: " + player.getEnergy());
-		                break;
-		            case "fuerza":
-		            	player.setStrength(player.getStrength() + cant);
-		                System.out.println("Tu fuerza: " + player.getStrength());
-		                break;
-		            case "velocidad":
-		            	player.setSpeed(player.getSpeed() + cant);
-		                System.out.println("Tu velocidad: " + player.getSpeed());
-		                break;
+		 public static void setTheExpOption(Player player, String stat) {
+		        System.out.println("Cuánto quieres subir?");
+		        int cant = sc.nextInt();
+		        if (player.getExperience() >= cant) {
+		            switch (stat) {
+		                case "vida":
+		                    player.maxHealth += cant;
+		                    System.out.println("Tu vida: " + player.health);
+		                    break;
+		                case "energia":
+		                    player.energy += cant;
+		                    System.out.println("Tu energía: " + player.energy);
+		                    break;
+		                case "fuerza":
+		                    player.strength += cant;
+		                    System.out.println("Tu fuerza: " + player.strength);
+		                    break;
+		                case "velocidad":
+		                    player.speed += cant;
+		                    System.out.println("Tu velocidad: " + player.speed);
+		                    break;
+		            }
+		            player.experience -= cant;
+		            System.out.println("Te quedan " + player.experience + " de experiencia");
+		        } else {
+		            System.out.println("Cantidad de experiencia insuficiente");
 		        }
-		        player.setExperience(player.getExperience() - cant);
-		        System.out.println("Te quedan " + player.getExperience() + " de experiencia");
-		        
-		    } else {
-		        System.out.println("Cantidad de experiencia insuficiente");
-		        
-		    }
-			useEXP(player);
-		}
 		
-		
+		 }
 		public void seePlayerItems() {
 			for (int i = 0; i < items.size(); i++) {
 				Item item = items.get(i);
@@ -139,13 +130,13 @@ public class Player extends Character {
 			}
 		}
 		//funcion para usar los items
-		public static void menuUseItems(Player player) {
+		public static void menuUseItems(Player player,int option) {
 			ArrayList<Item> playerItems = player.getItems();
 			// Pide al usuario que elija un ítem
 			System.out.println("Elige un ítem para usar:");
 			
 
-			if (playerItems != null && !playerItems.isEmpty()) {
+			if (option!=0) {
 				// Mostrar los ítems disponibles
 
 				player.seePlayerItems();
@@ -167,16 +158,21 @@ public class Player extends Character {
 			System.out.println("<0> Salir");
 		}
 
+		
 		public static void useItem(Player player, Item item) {
 			System.out.println("Usaste el ítem: " + item.getName());
 			item.useItemStats(player, item);
 		}
-	
+		
 		public int getCritcAttack(boolean isCritical) {
 			int attack = strength;
 			if (isCritical) {
 				attack *= 1.5;
 			}
 			return attack;
+		}
+		
+		public static void scapeZone() {
+			
 		}
 }

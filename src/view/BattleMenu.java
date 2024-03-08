@@ -7,6 +7,8 @@ public class BattleMenu extends Menu {
 	public static String getFightVisualizer(int width, Player player, Enemy enemy) {
 		StringBuilder visualizer = new StringBuilder();
 		// TODO: Enemy image and stats
+		/*String[] enemyVisualizer = {RepositoryASCII.neoArt, getBinaryTextBox("NEO", width/3)};
+		visualizer.append(getColoredString(getBinaryTextBox(enemyVisualizer, width, true))).append("\n");*/
 
 		visualizer.append(getColoredString(getSpaceLine(width))).append("\n");
 		visualizer.append(getColoredString(getBinaryLine(width))).append("\n");
@@ -53,25 +55,17 @@ public class BattleMenu extends Menu {
 		String health = "Vida: " + player.getHealth();
 		String attack = "Fuerza: " + player.getStrength();
 		String speed = "Velocidad: " + player.getSpeed();
+		String energy = "Energia: " + player.getEnergy();
 
 		StringBuilder textBox = new StringBuilder();
 
-		String[] stats = { health, attack, speed };
+		String[] stats = { health, attack, speed, energy };
 		textBox.append(getBinaryTextBox(stats, width));
 
 		return textBox.toString();
 	}
 	
-	//nuevos menus
-	public static void seeCharacterMenu(Player player) {
-		System.out.println("Exp: "+player.getExperience());
-		System.out.println("Qué te gustaría subir?");
-		System.out.println("<1> Vida");
-		System.out.println("<2> Fuerza");
-		System.out.println("<3> Energía");
-		System.out.println("<4> Velocidad");
-		System.out.println("<0> Salir");
-	}
+	
 
 }
 
