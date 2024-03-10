@@ -54,8 +54,9 @@ public class BattleMenu extends Menu {
 	public static String getPlayerInlineStats(int width, Player player) {
 		String health = "Vida: " + player.getHealth();
 		String attack = "Fuerza: " + player.getStrength();
-		String speed = "Velocidad: " + player.getSpeed();
 		String energy = "Energia: " + player.getEnergy();
+		String speed = "Suerte: " + player.getLuck();
+
 
 		StringBuilder textBox = new StringBuilder();
 

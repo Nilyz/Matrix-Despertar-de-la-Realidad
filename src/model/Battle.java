@@ -51,7 +51,7 @@ public class Battle {
 
 
     private int calculatePlayerDamage() {
-        int randomCriticProb = (int) (Math.random() * 10) + 1;
+        int randomCriticProb = (int) (Math.random() * 20) + 1;
         int playerDamage;
         //cuanto mayor sea la energía, más probabilidad de crítico
         if (randomCriticProb < player.getEnergy()) {

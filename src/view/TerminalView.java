@@ -37,8 +37,8 @@ public class TerminalView {
 		System.out.println("<1> Vida");
 		System.out.println("<2> Energía");
 		System.out.println("<3> Fuerza");
-		System.out.println("<4> Velocidad");
-		System.out.println("<0> Salir");
+		System.out.println("<4> Suerte");
+
 	}
 	
 	public void printEndBattle(boolean noEnemiesRemaining) {
@@ -66,6 +66,15 @@ public class TerminalView {
 		System.out.println("<2> SECTOR RESIDENCIAL");
 		System.out.println("<3> NÚCLEO DE LA_CIUDAD");
 		System.out.println("<4> INSTALACIÓN DE SEGURIDAD");
-		System.out.println("<5> Abandonar el juego");
+		System.out.println("<5> Ver items de las misiones");
+		System.out.println("<0> Abandonar el juego");
+	}
+	
+	public void printStartExpMenu(int exp) {
+		System.out.println("Experiencia disponible: "+ exp+" exp, repártela entre tus estadísticas");
+		System.out.println("<1> Vida");
+		System.out.println("<2> Fuerza");
+		System.out.println("<3> Energía");
+		System.out.println("<4> Velocidad");
 	}
 }

@@ -6,24 +6,26 @@ import java.util.Scanner;
 import view.BattleMenu;
 
 public class Player extends Character {
-	static Scanner sc = new Scanner(System.in);
-	
+
 	private int energy;
-	private int speed;
+	private int luck;
 
 	private ArrayList<Item> items;
+	private ArrayList<ZoneItem> missionItems;
 
-	public Player(String name, int maxHealth, int strength, int energy, int speed, int experience) {
+	public Player(String name, int maxHealth, int strength, int energy, int luck, int experience) {
 		super(name, maxHealth, strength, experience);
-		this.energy=energy;
-		this.speed=speed;
+		this.energy = energy;
+		this.luck = luck;
 		this.items = new ArrayList<>();
+		this.missionItems = new ArrayList<>();
 	}
 
 	// Personaje por defecto
 	public Player() {
-		this("Neo", 40, 10, 3, 10, 0);// esta llamando al otro constructor con sus parámetros
+		this("Neo", 40, 10, 10, 5, 0);// esta llamando al otro constructor con sus parámetros
 		this.items = new ArrayList<>();
+		this.missionItems = new ArrayList<>();
 	}
 
 	public int getEnergy() {
@@ -33,13 +35,13 @@ public class Player extends Character {
 	public void setEnergy(int energy) {
 		this.energy = energy;
 	}
-	
-	public int getSpeed() {
-		return speed;
+
+	public int getLuck() {
+		return luck;
 	}
 
-	public void setSpeed(int speed) {
-		this.speed = speed;
+	public void setLuck(int speed) {
+		this.luck = speed;
 	}
 
 	public ArrayList<Item> getItems() {
@@ -51,128 +53,143 @@ public class Player extends Character {
 	}
 
 	public void addItem(Item item) {
-		items.add(item);
+		this.items.add(item);
 	}
+
 	public void deleteItem(Item item) {
-		items.remove(item);
+		this.items.remove(item);
 	}
 
-
-
-	
-	@Override
-	public String toString() {
-		return super.toString()+ " energy=" + energy + ", speed=" + speed + ", items=" + items + "]";
+	public ArrayList<ZoneItem> getMissionItems() {
+		return missionItems;
 	}
 
-	
+	public void setMissionItems(ZoneItem missionItems) {
+		this.missionItems.add(missionItems);
+	}
 
 	// funcion para gastar la exp obtenida y poder elegir cuánto y en dónde gastarla
-		public static void useEXP(Player player) {
-			int expOption = sc.nextInt();
+	public static void useEXP(Player player) {
+		Scanner sc = new Scanner(System.in);
+		int expOption = sc.nextInt();
 
-			switch (expOption) {
-			case 1:
-	            setTheExpOption(player, "vida");
-	            break;
-	        case 2:
-	            setTheExpOption(player, "energia");
-	            break;
-	        case 3:
-	            setTheExpOption(player, "fuerza");
-	            break;
-	        case 4:
-	            setTheExpOption(player, "velocidad");
-	            break;
-			case 0:
+		switch (expOption) {
+		case 1:
+			setTheExpOption(player, "vida");
+			break;
+		case 2:
+			setTheExpOption(player, "energia");
+			break;
+		case 3:
+			setTheExpOption(player, "fuerza");
+			break;
+		case 4:
+			setTheExpOption(player, "suerte");
+			break;
+		case 0:
+			break;
+		default:
+			System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
+			useEXP(player);
+			break;
+		}
+
+	}
+
+	public static void setTheExpOption(Player player, String stat) {
+		Scanner sc = new Scanner(System.in);
+		System.out.println("Cuánto quieres subir?");
+		int cant = sc.nextInt();
+		if (player.getExperience() >= cant) {
+			switch (stat) {
+			case "vida":
+				player.health += cant;
+				System.out.println("Tu vida: " + player.health);
 				break;
-			default:
-	            System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
-	            useEXP(player); 
-	            break;
+			case "energia":
+				player.energy += cant;
+				System.out.println("Tu energía: " + player.energy);
+				break;
+			case "fuerza":
+				player.strength += cant;
+				System.out.println("Tu fuerza: " + player.strength);
+				break;
+			case "suerte":
+				player.luck += cant;
+				System.out.println("Tu Suerte: " + player.luck);
+				break;
 			}
-
+			player.experience -= cant;
+			System.out.println("Te quedan " + player.experience + " de experiencia");
+		} else {
+			System.out.println("Cantidad de experiencia insuficiente");
 		}
-		 public static void setTheExpOption(Player player, String stat) {
-		        System.out.println("Cuánto quieres subir?");
-		        int cant = sc.nextInt();
-		        if (player.getExperience() >= cant) {
-		            switch (stat) {
-		                case "vida":
-		                    player.maxHealth += cant;
-		                    System.out.println("Tu vida: " + player.health);
-		                    break;
-		                case "energia":
-		                    player.energy += cant;
-		                    System.out.println("Tu energía: " + player.energy);
-		                    break;
-		                case "fuerza":
-		                    player.strength += cant;
-		                    System.out.println("Tu fuerza: " + player.strength);
-		                    break;
-		                case "velocidad":
-		                    player.speed += cant;
-		                    System.out.println("Tu velocidad: " + player.speed);
-		                    break;
-		            }
-		            player.experience -= cant;
-		            System.out.println("Te quedan " + player.experience + " de experiencia");
-		        } else {
-		            System.out.println("Cantidad de experiencia insuficiente");
-		        }
-		
-		 }
-		public void seePlayerItems() {
-			for (int i = 0; i < items.size(); i++) {
-				Item item = items.get(i);
-				System.out.print("\n<"+(i + 1) + "> ");
-				item.seeItem();
-			}
-		}
-		//funcion para usar los items
-		public static void menuUseItems(Player player,int option) {
-			ArrayList<Item> playerItems = player.getItems();
-			// Pide al usuario que elija un ítem
-			System.out.println("Elige un ítem para usar:");
-			
 
-			if (option!=0) {
+	}
+
+	public void seePlayerItems() {
+		for (int i = 0; i < items.size(); i++) {
+			Item item = items.get(i);
+			System.out.print("<" + (i + 1) + "> ");
+			item.seeItem();
+		}
+
+	}
+
+	// funcion para usar los items
+	public static void menuUseItems(Player player) {
+		Scanner sc = new Scanner(System.in);
+		ArrayList<Item> playerItems = player.getItems();
+		int choice = -1;
+		System.out.println("Elige un ítem para usar:");
+
+		if (!playerItems.isEmpty()) {
+			while (choice != 0) {
 				// Mostrar los ítems disponibles
-
 				player.seePlayerItems();
+				System.out.println("\n<0> Salir");
 
-				// Pedir al jugador que elija un ítem
-				int choice = sc.nextInt();
+				choice = sc.nextInt();
 
-				// Verificar si la opción elegida es válida
 				if (choice >= 1 && choice <= playerItems.size()) {
 					Item selected = playerItems.get(choice - 1);
 					// Usar el ítem seleccionado
 					useItem(player, selected);
-				} else {
+				} else if (choice != 0) {
 					System.out.println("Selección inválida.");
 				}
-			} else {
-				System.out.println("El inventario del jugador está vacío.");
 			}
+		} else {
+			System.out.println("No hay ítems disponibles para usar en el inventario del jugador.");
 			System.out.println("<0> Salir");
-		}
 
-		
-		public static void useItem(Player player, Item item) {
-			System.out.println("Usaste el ítem: " + item.getName());
-			item.useItemStats(player, item);
+			choice = sc.nextInt();
+
 		}
-		
-		public int getCritcAttack(boolean isCritical) {
-			int attack = strength;
-			if (isCritical) {
-				attack *= 1.5;
-			}
-			return attack;
+		if (choice == 0) {
+			// Salir del método
+			return;
 		}
-		
-		public static void scapeZone() {
+	}
+
+	public static void useItem(Player player, Item item) {
+		System.out.println("Usaste el ítem: " + item.getName());
+		item.useItemStats(player, item);
+	}
+
+	//calcular el crítico
+	public int getCritcAttack(boolean isCritical) {
+		int attack = strength;
+		if (isCritical) {
+			attack *= 1.5;
 			
 		}
+		return attack;
+	}
+
+	@Override
+	public String toString() {
+		return "Player [energy=" + energy + ", luck=" + luck + ", items=" + items + "]";
+	}
+
 }
