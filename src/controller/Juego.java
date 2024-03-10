@@ -1,4 +1,5 @@
 package controller;
+
 import model.*;
 import java.util.Scanner;
 
@@ -140,7 +141,7 @@ public class Juego {
 
 			vista.printZoneSelector();
 			int selectZoneOption = sc.nextInt();
-
+			
 			Zone selectedZone = null;
 			switch (selectZoneOption) {
 			case 1:
@@ -153,10 +154,14 @@ public class Juego {
 				selectedZone = zone3;
 				break;
 			case 4:
-				selectedZone = zone4;
-				break;
+				 if (jugador.getMissionItems().size()!=3) {
+			            System.out.println("Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
+			        } else {
+			            selectedZone = zone4;
+			        }
+			        break;
 			case 5:
-				//ver item misiones
+				jugador.seeMissionItens();
 				break;
 			case 0:
 				continuarJugando = false;
@@ -189,43 +194,62 @@ public class Juego {
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
 				vista.printFightVisualizer(jugador, currentAgent);
 				int option = sc.nextInt();
-
-				switch (option) {
-				case 1:
-					lucha.fightTurn();
-					break;
-				case 2:
-					jugador.menuUseItems(jugador);
-					break;
-				case 3:
-					vista.printSeeCharacterMenu(jugador);
-					System.out.println("<0> Salir");
-					jugador.useEXP(jugador);
-					break;
-				case 4:
-					System.out.println("Abandonastes la zona");
-					return;
-				case 5:
-					vista.printGiveUp();
-					System.exit(0); // Salir completamente del programa
-					break;
-				default:
-					System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
-				}
+				 handleBattleOption(option, lucha, jugador, vista);
+				
 			}
 
 			vista.printEnemyDrop(currentAgent);
 			cont++;
-			if (cont < zone.getAgents().size()) {
-				vista.printEndBattle(noEnemiesRemaining);
-			} else {
-				noEnemiesRemaining = true;
-				vista.printEndBattle(noEnemiesRemaining);
-				//cuando limpie la zona, se le agregará el item de la misión
-				jugador.setMissionItems(zone.getMissionItem());
+			handleEndBattle(cont,zone, jugador, vista, noEnemiesRemaining);
 
+		}
+	}
+	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista) {
+		switch (option) {
+		case 1:
+			lucha.fightTurn();
+			break;
+		case 2:
+			jugador.menuUseItems(jugador);
+			break;
+		case 3:
+			vista.printSeeCharacterMenu(jugador);
+			System.out.println("<0> Salir");
+			jugador.useEXP(jugador);
+			break;
+		case 4:
+			System.out.println("Abandonastes la zona");
+			game(jugador);
+		case 5:
+			vista.printGiveUp();
+			System.exit(0); // Salir completamente del programa
+			break;
+		default:
+			System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
+		}
+	}
+	
+	private static void handleEndBattle(int cont,Zone zone, Player jugador, TerminalView vista, boolean noEnemiesRemaining) {
+		if (cont < zone.getAgents().size()) {
+			vista.printEndBattle(noEnemiesRemaining);
+		} else {
+			noEnemiesRemaining = true;
+			vista.printEndBattle(noEnemiesRemaining);
+			// cuando limpie la zona, se le agregará el item de la misión
+			
+			// Verificar primero si el jugador ya tiene el ítem de misión en su lista
+			boolean containsItem = false;
+			for (ZoneItem item : jugador.getMissionItems()) {
+			    if (item.getName().equals(zone.getMissionItem().getName())) {
+			        containsItem = true;
+			    }
 			}
-			System.out.println(jugador.toString());
+
+			// Si el ítem no está en la lista, agrégalo
+			if (!containsItem) {
+			    jugador.setMissionItems(zone.getMissionItem());
+			    System.out.println("Agregando ítem de misión: " + zone.getMissionItem().getName());
+			}
 
 		}
 	}

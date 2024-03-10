@@ -130,7 +130,7 @@ public class Player extends Character {
 	public void seePlayerItems() {
 		for (int i = 0; i < items.size(); i++) {
 			Item item = items.get(i);
-			System.out.print("<" + (i + 1) + "> ");
+			System.out.print("\n<" + (i + 1) + "> ");
 			item.seeItem();
 		}
 
@@ -177,6 +177,13 @@ public class Player extends Character {
 		item.useItemStats(player, item);
 	}
 
+	public void seeMissionItens() {
+		 System.out.println("Ítems de Misión:");
+		    for (int i = 0; i < missionItems.size(); i++) {
+		        ZoneItem item = missionItems.get(i);
+		        System.out.println((i + 1) + ". " + item.getName());
+		    }
+	}
 	//calcular el crítico
 	public int getCritcAttack(boolean isCritical) {
 		int attack = strength;

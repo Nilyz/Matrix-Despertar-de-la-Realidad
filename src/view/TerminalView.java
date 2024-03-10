@@ -57,8 +57,12 @@ public class TerminalView {
 	        
 	}
 	
+	public void printZoneItemDrop( Zone zone) {
+		 System.out.println("\nObtuvistes " +zone.getMissionItem().getName());
+	}
+	
 	public void printGiveUp() {
-		System.out.println("aaaaaaaaaaaaaaaaaaa");
+		System.out.println("Te reendistes ante el dominio de la Matrix");
 	}
 	public void printZoneSelector() {
 		System.out.println("A qué zona te gustaría adentrarte?");
