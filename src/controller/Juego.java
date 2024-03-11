@@ -122,70 +122,71 @@ public class Juego {
 
 	// función para empezar las rondas
 	public static void game(Player jugador) {
-	    TerminalView vista = new TerminalView();
-	    Scanner sc = new Scanner(System.in);
+		TerminalView vista = new TerminalView();
+		Scanner sc = new Scanner(System.in);
 
-	    boolean continuarJugando = true;
+		boolean continuarJugando = true;
 
-	    while (continuarJugando) {
+		while (continuarJugando) {
 
-	        Zone zone1 = new Zone("DISTRITO INDUSTRIAL", new ZoneItem("Disfraz de Técnico de Mantenimiento"));
-	        Zone zone2 = new Zone("SECTOR RESIDENCIAL", new ZoneItem("Dispositivo de Hacking Avanzado"));
-	        Zone zone3 = new Zone("NÚCLEO DE LA CIUDAD", new ZoneItem("Tarjeta de Acceso Nivel 5"));
-	        Zone zone4 = new Zone("INSTALACIÓN DE SEGURIDAD", new ZoneItem("Dispositivo de Desactivación de la Matrix"));
+			Zone zone1 = new Zone("DISTRITO INDUSTRIAL", new ZoneItem("Disfraz de Técnico de Mantenimiento"));
+			Zone zone2 = new Zone("SECTOR RESIDENCIAL", new ZoneItem("Dispositivo de Hacking Avanzado"));
+			Zone zone3 = new Zone("NÚCLEO DE LA CIUDAD", new ZoneItem("Tarjeta de Acceso Nivel 5"));
+			Zone zone4 = new Zone("INSTALACIÓN DE SEGURIDAD",
+					new ZoneItem("Dispositivo de Desactivación de la Matrix"));
 
-	        zone1.generateEnemies(Distritos.DISTRITO_INDUSTRIAL, 2, jugador);
-	        zone2.generateEnemies(Distritos.SECTOR_RESIDENCIAL, 3, jugador);
-	        zone3.generateEnemies(Distritos.NÚCLEO_DE_LA_CIUDAD, 3, jugador);
-	        zone4.generateEnemies(Distritos.INSTALACIÓN_DE_SEGURIDAD, 4, jugador);
-	        
-	        // Agregar a Smith al final de cada zona
-	        zone1.generateSmith(Distritos.DISTRITO_INDUSTRIAL);
-	        zone2.generateSmith(Distritos.SECTOR_RESIDENCIAL);
-	        zone3.generateSmith(Distritos.NÚCLEO_DE_LA_CIUDAD);
-	        zone4.generateSmith(Distritos.INSTALACIÓN_DE_SEGURIDAD);
+			zone1.generateEnemies(Distritos.DISTRITO_INDUSTRIAL, 2, jugador);
+			zone2.generateEnemies(Distritos.SECTOR_RESIDENCIAL, 3, jugador);
+			zone3.generateEnemies(Distritos.NÚCLEO_DE_LA_CIUDAD, 3, jugador);
+			zone4.generateEnemies(Distritos.INSTALACIÓN_DE_SEGURIDAD, 4, jugador);
 
-	        vista.printZoneSelector();
-	        int selectZoneOption = sc.nextInt();
-	        
-	        Zone selectedZone = null;
-	        switch (selectZoneOption) {
-	            case 1:
-	                selectedZone = zone1;
-	                break;
-	            case 2:
-	                selectedZone = zone2;
-	                break;
-	            case 3:
-	                selectedZone = zone3;
-	                break;
-	            case 4:
-	                 if (jugador.getMissionItems().size()!=3) {
-	                        System.out.println("Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
-	                    } else {
-	                        selectedZone = zone4;
-	                    }
-	                    break;
-	            case 5:
-	                jugador.seeMissionItens();
-	                break;
-	            case 0:
-	                continuarJugando = false;
-	                System.out.println("Abandonastes la partida...");
-	                break;
-	            default:
-	                System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
-	        }
+			// Agregar a Smith al final de cada zona
+			zone1.generateSmith(Distritos.DISTRITO_INDUSTRIAL);
+			zone2.generateSmith(Distritos.SECTOR_RESIDENCIAL);
+			zone3.generateSmith(Distritos.NÚCLEO_DE_LA_CIUDAD);
+			zone4.generateSmith(Distritos.INSTALACIÓN_DE_SEGURIDAD);
 
-	        if (selectedZone != null) {
-	            System.out.println("Te has adentrado en -" + selectedZone.getName() + "-");
-	            startBattle(jugador, selectedZone);
-	        }
-	    }
+			vista.printZoneSelector();
+			int selectZoneOption = sc.nextInt();
 
-	    sc.close();
+			Zone selectedZone = null;
+			switch (selectZoneOption) {
+			case 1:
+				selectedZone = zone1;
+				break;
+			case 2:
+				selectedZone = zone2;
+				break;
+			case 3:
+				selectedZone = zone3;
+				break;
+			case 4:
+				if (jugador.getMissionItems().size() != 3) {
+					System.out.println(
+							"Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
+				} else {
+					selectedZone = zone4;
+				}
+				break;
+			case 5:
+				jugador.seeMissionItens();
+				break;
+			case 0:
+				continuarJugando = false;
+				System.out.println("Abandonastes la partida...");
+				break;
+			default:
+				System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
+			}
+
+			if (selectedZone != null) {
+				System.out.println("Te has adentrado en -" + selectedZone.getName() + "-");
+				startBattle(jugador, selectedZone);
+			}
+		}
+
+		sc.close();
 	}
-
 
 	public static void startBattle(Player jugador, Zone zone) {
 
@@ -195,28 +196,39 @@ public class Juego {
 		Scanner sc = new Scanner(System.in);
 
 		for (Agent currentAgent : zone.getAgents()) {
-			Battle lucha = new Battle(jugador, currentAgent);//crea una batalla por cada agente
+			Battle lucha = new Battle(jugador, currentAgent);// crea una batalla por cada agente
 			if (currentAgent.getName().equals("Smith")) {
 				Smith smith = (Smith) currentAgent;
-				String quote = smith.printSmithQuote(zone);
-		        vista.printCharacterDialogue("Agente Smith", quote);
-	        }   //imprimir una frase del señor smith antes de pelear
-			
-			vista.printStartBattle(currentAgent);;
+				String smithStartQuote = smith.SmithStartQuote(zone);
+				vista.printCharacterDialogue("Agente Smith", smithStartQuote);
+			} // imprimir una frase del señor smith antes de pelear
+
+			vista.printStartBattle(currentAgent);
+			;
 
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
 				vista.printFightVisualizer(jugador, currentAgent);
 				int option = sc.nextInt();
-				 handleBattleOption(option, lucha, jugador, vista);
-				
+				handleBattleOption(option, lucha, jugador, vista);
+
 			}
 
 			vista.printEnemyDrop(currentAgent);
+			if (currentAgent.getName().equals("Smith")) {
+				Smith smith = (Smith) currentAgent;
+				String smithEndQuote = smith.SmithEndQuote(zone);
+				String palyerEndQuote = jugador.PlayerEndQuote(jugador, zone);
+				vista.printCharacterDialogue("Agente Smith", smithEndQuote);
+				vista.printCharacterDialogue(jugador.getName(), palyerEndQuote);
+
+			} // imprimir una frase del señor smith y el jugador despues de pelear
+
 			cont++;
-			handleEndBattle(cont,zone, jugador, vista, noEnemiesRemaining);
+			handleEndBattle(cont, zone, jugador, vista, noEnemiesRemaining);
 
 		}
 	}
+
 	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista) {
 		switch (option) {
 		case 1:
@@ -241,36 +253,38 @@ public class Juego {
 			System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
 		}
 	}
-	
-	private static void handleEndBattle(int cont,Zone zone, Player jugador, TerminalView vista, boolean noEnemiesRemaining) {
+
+	private static void handleEndBattle(int cont, Zone zone, Player jugador, TerminalView vista,
+			boolean noEnemiesRemaining) {
 		if (jugador.getHealth() <= 0) {
-	        System.out.println("Has perdido toda tu vida. ¡Game Over!");
-	        System.exit(0); // Salir completamente del programa
-	    }
+			System.out.println("Has perdido toda tu vida. ¡Game Over!");
+			System.exit(0); // Salir completamente del programa
+		}
 		int droneProbAparition = (int) (Math.random() * 10) + 1;
 		if (cont < zone.getAgents().size()) {
-			if(droneProbAparition<5) {
-				Dron dron =new Dron("Dron de Vigilancia de nivel ",5,10,2);
-				dron.stealExperience(jugador);
+			if (droneProbAparition < 6) {
+				Dron dron = new Dron();
+				dron = dron.generateDron(jugador, zone);
+				dron.stealExperience(jugador, dron.getStealExp(), dron);
 			}
 			vista.printEndBattle(noEnemiesRemaining);
 		} else {
 			noEnemiesRemaining = true;
 			vista.printEndBattle(noEnemiesRemaining);
 			// cuando limpie la zona, se le agregará el item de la misión
-			
+
 			// Verificar primero si el jugador ya tiene el ítem de misión en su lista
 			boolean containsItem = false;
 			for (ZoneItem item : jugador.getMissionItems()) {
-			    if (item.getName().equals(zone.getMissionItem().getName())) {
-			        containsItem = true;
-			    }
+				if (item.getName().equals(zone.getMissionItem().getName())) {
+					containsItem = true;
+				}
 			}
 
 			// Si el ítem no está en la lista, agrégalo
 			if (!containsItem) {
-			    jugador.setMissionItems(zone.getMissionItem());
-			    System.out.println("Agregando ítem de misión: " + zone.getMissionItem().getName());
+				jugador.setMissionItems(zone.getMissionItem());
+				System.out.println("Agregando ítem de misión: " + zone.getMissionItem().getName());
 			}
 
 		}

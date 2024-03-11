@@ -178,25 +178,37 @@ public class Player extends Character {
 	}
 
 	public void seeMissionItens() {
-		 System.out.println("Ítems de Misión:");
-		    for (int i = 0; i < missionItems.size(); i++) {
-		        ZoneItem item = missionItems.get(i);
-		        System.out.println((i + 1) + ". " + item.getName());
-		    }
+		System.out.println("Ítems de Misión:");
+		for (int i = 0; i < missionItems.size(); i++) {
+			ZoneItem item = missionItems.get(i);
+			System.out.println((i + 1) + ". " + item.getName());
+		}
 	}
-	//calcular el crítico
+
+	// calcular el crítico
 	public int getCritcAttack(boolean isCritical) {
 		int attack = strength;
 		if (isCritical) {
 			attack *= 1.5;
-			
+
 		}
 		return attack;
 	}
 
-	@Override
-	public String toString() {
-		return "Player [energy=" + energy + ", luck=" + luck + ", items=" + items + "]";
+	public String PlayerEndQuote(Player player, Zone zone) {
+
+		if (zone.getName().equals("DISTRITO INDUSTRIAL")) {
+			return "No me detendrás, Smith. La verdad prevalecerá sobre tus mentiras.";
+		} else if (zone.getName().equals("SECTOR RESIDENCIAL")) {
+			return "La libertad siempre triunfará sobre la opresión, Smith";
+		} else if (zone.getName().equals("NÚCLEO DE LA CIUDAD")) {
+			return "\"La libertad siempre triunfará sobre la opresión, Smith.";
+		} else if (zone.getName().equals("INSTALACIÓN DE SEGURIDAD")) {
+			return "La verdad ha sido revelada, Smith. La humanidad está libre..";
+		} else {
+			return "";
+		}
+
 	}
 
 }
