@@ -1,6 +1,7 @@
 package view;
 
 import model.*;
+import model.Zone.Distritos;
 
 
 public class TerminalView {
@@ -81,4 +82,13 @@ public class TerminalView {
 		System.out.println("<3> Energía");
 		System.out.println("<4> Velocidad");
 	}
+	
+public void printStartBattle(Agent agent) {
+		
+        System.out.println("¡Batalla iniciada!");
+        System.out.println("ENEMIGO: " + agent.getName());
+        System.out.println("¡Prepárate para luchar!");
+    }
+
+
 }

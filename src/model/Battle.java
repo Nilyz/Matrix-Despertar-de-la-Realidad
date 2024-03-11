@@ -17,12 +17,7 @@ public class Battle {
 		this.agent = agent;
 	}
 
-	public void startBattle() {
-		
-        System.out.println("¡Batalla iniciada!");
-        System.out.println("ENEMIGO: " + agent.getName());
-        System.out.println("¡Prepárate para luchar!");
-    }
+	
 
     public void fightTurn() {
         if (!playerDefeated && !enemyDefeated) {
@@ -127,7 +122,6 @@ public class Battle {
 
 				// Ver si se murió el jugador
 				if (playerHP <= 0) {
-					System.out.println("¡Has sido derrotado!");
 					playerDefeated = true;
 				}
 			}

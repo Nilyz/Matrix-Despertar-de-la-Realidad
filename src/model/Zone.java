@@ -43,10 +43,7 @@ public class Zone {
 		this.missionItem = missionItem;
 	}
 
-	@Override
-	public String toString() {
-		return "Zone [name=" + name + ", agents=" + agents + "]";
-	}
+	
 
 	public static enum Distritos {
 		DISTRITO_INDUSTRIAL, SECTOR_RESIDENCIAL, NÚCLEO_DE_LA_CIUDAD, INSTALACIÓN_DE_SEGURIDAD
@@ -54,8 +51,8 @@ public class Zone {
 	}
 
 	// Método para generar enemigos de una zona
-	public void generateEnemies(Distritos district, int cant,Player player) {
-	    String[] enemyNames;
+	public void generateEnemies(Distritos district, int cant, Player player) {
+	    String[] enemyNames = null;
 	    switch (district) {
 	        case DISTRITO_INDUSTRIAL:
 	            enemyNames = new String[]{"Robots de seguridad", "Obreros digitales", "Caminantes de acero", "Lanceros industriales"};
@@ -69,10 +66,10 @@ public class Zone {
 	        case INSTALACIÓN_DE_SEGURIDAD:
 	            enemyNames = new String[]{"Guardianes de la Instalación", "Perros de Guardia Virtuales", "Sistemas de Seguridad Autónomos", "Programas de Rastreo y Detección"};
 	            break;
-	        default:
-	            throw new IllegalArgumentException("Distrito desconocido: " + district);
+	        
 	    }
 
+	    // Generar enemigos normales según el distrito
 	    for (int i = 0; i < cant; i++) {
 	        String enemyName = enemyNames[(int) (Math.random() * enemyNames.length)];
 	        int enemyHP = (int) (Math.random() * 20) + 1;
@@ -87,6 +84,20 @@ public class Zone {
 	        }
 	        agents.add(agente);
 	    }
+	}
+
+	public void generateSmith(Distritos district) {
+	    Smith smithBoss = null;
+	    if (district == Distritos.DISTRITO_INDUSTRIAL) {
+	        smithBoss = new Smith("Smith", 10, 25, 35, 60, 100, 7);
+	    } else if (district == Distritos.SECTOR_RESIDENCIAL) {
+	        smithBoss = new Smith("Smith", 10, 20, 30, 50, 80, 5);
+	    } else if (district == Distritos.NÚCLEO_DE_LA_CIUDAD) {
+	        smithBoss = new Smith("Smith", 10, 30, 40, 70, 120, 8);
+	    } else if (district == Distritos.INSTALACIÓN_DE_SEGURIDAD) {
+	        smithBoss = new Smith("Smith", 20, 35, 45, 80, 150, 10);
+	    }
+	    agents.add(smithBoss); // Agregar smithBoss a la lista de Agent
 	}
 
 	// recuerda cambiar luego los stats de los items
@@ -113,14 +124,6 @@ public class Zone {
 		return itemList[randomItem];
 	}
 
-	// recuerda eliminar
-	public void verZona() {
-		System.out.println("zona: " + name);
-
-		for (Agent agent : agents) {
-			System.out.println(agent.getName() + " - Salud: " + agent.getMaxHealth() + ", Fuerza: "
-					+ agent.getStrength() + ", EXP: " + agent.getExperience() + ", drop: " + agent.getDroppableItems());
-		}
-	}
+	
 
 }
