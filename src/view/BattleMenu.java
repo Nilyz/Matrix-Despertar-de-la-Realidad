@@ -2,6 +2,7 @@ package view;
 
 import model.Enemy;
 import model.Player;
+import model.Agent;
 
 public class BattleMenu extends Menu {
 	public static String getFightVisualizer(int width, Player player, Enemy enemy) {
@@ -61,6 +62,20 @@ public class BattleMenu extends Menu {
 		StringBuilder textBox = new StringBuilder();
 
 		String[] stats = { health, attack, speed, energy };
+		textBox.append(getBinaryTextBox(stats, width));
+
+		return textBox.toString();
+	}
+	
+	/*temporal*/
+	public static String getEnemyInlineStats(int width, Agent agent) {
+		String health = "Vida: " + agent.getHealth();
+		String attack = "Fuerza: " + agent.getStrength();
+
+
+		StringBuilder textBox = new StringBuilder();
+
+		String[] stats = { health, attack};
 		textBox.append(getBinaryTextBox(stats, width));
 
 		return textBox.toString();

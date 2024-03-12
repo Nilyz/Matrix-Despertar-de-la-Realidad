@@ -12,7 +12,7 @@ public class Item {
 		this.strength = strength;
 		this.energy = energy;
 		this.luck = luck;
-		this.health=health;
+		this.health = health;
 	}
 
 	public String getName() {
@@ -46,8 +46,7 @@ public class Item {
 	public void setLuck(int speed) {
 		this.luck = speed;
 	}
-	
-	
+
 	public int getHealth() {
 		return health;
 	}
@@ -56,34 +55,33 @@ public class Item {
 		this.health = health;
 	}
 
-	public void seeItem() {
-		System.out.print(name+": ");
-		if(strength!=0) {
-			System.out.print(" Fuerza = "+ strength);
-		}else if(energy!=0) {
-			System.out.print(" Energia = "+energy);
-		}else if(luck!=0) {
-			System.out.print(" Suerte = "+ luck);
-		}else if(health!=0) {
-			System.out.print(" Vida = "+ health);
+	public String seeItem() {
+		System.out.print(name + ": ");
+		if (strength != 0) {
+			return "+" + strength + " Fuerza";
+		} else if (energy != 0) {
+			return "+" + energy + " Energia";
+		} else if (luck != 0) {
+			return "+" + luck + " Suerte";
+		} else if (health != 0) {
+			return "+" + health + " Vida";
 		}
+		return "";
 	}
-	
-	//para que retorne el stat que tiene
-	public void useItemStats(Player player,Item item) {
-		if(strength!=0) {
-			player.setStrength(player.getStrength()+item.getStrength());
-		}else if(energy!=0) {
-			player.setEnergy(player.getEnergy()+item.getEnergy());
-		}else if(luck!=0) {
-			player.setLuck(player.getLuck()+item.getLuck());
-		}else if(health!=0) {
-			player.setHealth(player.getHealth()+item.getHealth());
-			
+
+	// para que retorne el stat que tiene
+	public void useItemStats(Player player, Item item) {
+		if (strength != 0) {
+			player.setStrength(player.getStrength() + item.getStrength());
+		} else if (energy != 0) {
+			player.setEnergy(player.getEnergy() + item.getEnergy());
+		} else if (luck != 0) {
+			player.setLuck(player.getLuck() + item.getLuck());
+		} else if (health != 0) {
+			player.setHealth(player.getHealth() + item.getHealth());
+
 		}
 		player.deleteItem(item);
 	}
-	
-	
 
 }

@@ -39,6 +39,7 @@ public class TerminalView {
 		System.out.println("<2> Energía");
 		System.out.println("<3> Fuerza");
 		System.out.println("<4> Suerte");
+		System.out.println("<0> Salir");
 
 	}
 	
@@ -62,8 +63,8 @@ public class TerminalView {
 		 System.out.println("\nObtuvistes " +zone.getMissionItem().getName());
 	}
 	
-	public void printGiveUp() {
-		System.out.println("Te reendistes ante el dominio de la Matrix");
+	public String printGiveUp() {
+		return "Has cedido ante el implacable dominio de la Matrix. ¿Volverás a desafiarla?";
 	}
 	public void printZoneSelector() {
 		System.out.println("A qué zona te gustaría adentrarte?");

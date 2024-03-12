@@ -1,12 +1,10 @@
 package controller;
 
 import model.*;
+
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import model.Agent;
-import model.Battle;
-import model.Player;
-import model.Zone;
 import model.Zone.Distritos;
 import view.TerminalView;
 
@@ -117,7 +115,7 @@ public class Juego {
 			enter = sc.nextLine();
 
 			vista.printCharacterDialogue("Morfeo", name
-					+ " , tu primera misión es obtener tres objetos clave dentro de la Matrix para poder infiltrarse en las instalaciones de seguridad.");
+					+ " , tu primera misión es obtener tres objetos clave dentro de la Matrix para poder infiltrarte en las instalaciones de seguridad.");
 			enter = sc.nextLine();
 			/* fondo negro */vista.printCharacterDialogue("",
 					"“Los objetos se encuentran en el DISTRITO INDUSTRIAL, el SECTOR RESIDENCIAL, y el NÚCLEO DE LA_CIUDAD...\"");
@@ -168,8 +166,7 @@ public class Juego {
 				break;
 			case 4:
 				if (jugador.getMissionItems().size() != 3) {
-					System.out.println(
-							"Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
+				/*fondo negro*/vista.printCharacterDialogue("", "Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
 				} else {
 					selectedZone = zone4;
 				}
@@ -180,15 +177,22 @@ public class Juego {
 			case 0:
 				continuarJugando = false;
 				/* fondo negro */System.out.println("Abandonastes la partida...");
+				/*fondo negro*/vista.printCharacterDialogue("", vista.printGiveUp());
 				break;
 			default:
-				System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
+				/*fondo negro*/vista.printCharacterDialogue("", "Opción inválida. Por favor, selecciona una opción válida.");
 			}
-
 			if (selectedZone != null) {
-				/*fondo negro*/vista.printCharacterName("-" + selectedZone.getName() + "-");
-				startBattle(jugador, selectedZone);
-			}
+	            vista.printCharacterName("-" + selectedZone.getName() + "-");
+	            startBattle(jugador, selectedZone);
+
+	            // Verificar si el jugador ha obtenido los cuatro objetos clave
+	            if (jugador.getMissionItems().size() == 4) {
+	                vista.printCharacterDialogue(""," “La verdad finalmente ha sido revelada, y la libertad, alcanzada”");
+	                continuarJugando = false; // Terminar el juego
+	            }
+	            
+	        }
 		}
 
 		sc.close();
@@ -217,16 +221,17 @@ public class Juego {
 				handleBattleOption(option, lucha, jugador, vista,currentAgent);
 
 			}
-
-			vista.printEnemyDrop(currentAgent);
-			if (currentAgent.getName().equals("Smith")) {
-				Smith smith = (Smith) currentAgent;
-				String smithEndQuote = smith.SmithEndQuote(zone);
-				String palyerEndQuote = jugador.PlayerEndQuote(jugador, zone);
-				vista.printCharacterDialogue("Agente Smith", smithEndQuote);
-				vista.printCharacterDialogue(jugador.getName(), palyerEndQuote);
-
-			} // imprimir una frase del señor smith y el jugador despues de pelear
+			// Verificar si el jugador sigue con vida antes de imprimir las frases
+			if (jugador.getHealth() > 0) {
+	            vista.printEnemyDrop(currentAgent);
+	            if (currentAgent.getName().equals("Smith")) {
+	                Smith smith = (Smith) currentAgent;
+	                String smithEndQuote = smith.SmithEndQuote(zone);
+	                String palyerEndQuote = jugador.PlayerEndQuote(jugador, zone);
+	                vista.printCharacterDialogue("Agente Smith", smithEndQuote);
+	                vista.printCharacterDialogue(jugador.getName(), palyerEndQuote);
+	            } // imprimir una frase final del señor smith y el jugador después de pelear
+	        }
 
 			cont++;
 			handleEndBattle(cont, zone, jugador, vista, noEnemiesRemaining);
@@ -243,18 +248,18 @@ public class Juego {
 			
 			break;
 		case 2:
-			jugador.menuUseItems(jugador);
+			menuUseItems(jugador);
 			break;
 		case 3:
 			vista.printSeeCharacterMenu(jugador);
-			System.out.println("<0> Salir");
 			jugador.useEXP(jugador);
 			break;
 		case 4:
-			System.out.println("Abandonastes la zona");
+			/*fondo negro*/vista.printCharacterDialogue("", "Abandonastes la zona");
+			
 			game(jugador);
 		case 5:
-			vista.printGiveUp();
+			vista.printCharacterDialogue("", vista.printGiveUp());
 			System.exit(0); // Salir completamente del programa
 			break;
 		default:
@@ -262,10 +267,47 @@ public class Juego {
 		}
 	}
 
+	// funcion para usar los items
+		public static void menuUseItems(Player player) {
+			Scanner sc = new Scanner(System.in);
+			TerminalView vista = new TerminalView();
+			ArrayList<Item> playerItems = player.getItems();
+			int choice = -1;
+			/*negro*/vista.printCharacterName("Elige un ítem para usar:");
+
+			if (!playerItems.isEmpty()) {
+				while (choice != 0) {
+					// Mostrar los ítems disponibles
+					System.out.println(player.seePlayerItems());
+					System.out.println("\n<0> Salir");
+
+					choice = sc.nextInt();
+
+					if (choice >= 1 && choice <= playerItems.size()) {
+						Item selected = playerItems.get(choice - 1);
+						// Usar el ítem seleccionado
+						player.useItem(player, selected);
+					} else if (choice != 0) {
+						vista.printCharacterName("Selección inválida.");
+					}
+				}
+			} else {
+				System.out.println("No hay ítems disponibles para usar en el inventario del jugador.");
+				System.out.println("<0> Salir");
+
+				choice = sc.nextInt();
+
+			}
+			if (choice == 0) {
+				// Salir del método
+				return;
+			}
+		}
+
 	private static void handleEndBattle(int cont, Zone zone, Player jugador, TerminalView vista,
 			boolean noEnemiesRemaining) {
 		if (jugador.getHealth() <= 0) {
-			System.out.println("Has perdido toda tu vida. ¡Game Over!");
+			vista.printCharacterDialogue("", vista.printGiveUp());
 			System.exit(0); // Salir completamente del programa
 		}
 		int droneProbAparition = (int) (Math.random() * 10) + 1;

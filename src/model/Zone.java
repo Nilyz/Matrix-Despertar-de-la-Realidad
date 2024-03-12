@@ -117,7 +117,7 @@ public class Zone {
 		Item newItem12 = new Item("Disfraz de civil", 6, 0, 0, 0);
 		Item newItem13 = new Item("Mochila de supervivencia", 0, 4, 0, 0);
 		Item newItem14 = new Item("Armas de alta tecnología", 0, 0, 0, 5);
-		Item newItem15 = new Item("Botas de acer", 3, 0, 0, 0);
+		Item newItem15 = new Item("Botas de acero", 3, 0, 0, 0);
 
 		Item itemList[] = { newItem, newItem2, newItem3, newItem4, newItem5, newItem6, newItem7, newItem8, newItem9,
 				newItem10, newItem11, newItem12, newItem13, newItem14, newItem15 };
