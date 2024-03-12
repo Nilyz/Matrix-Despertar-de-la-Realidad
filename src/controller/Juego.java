@@ -70,16 +70,17 @@ public class Juego {
 		TerminalView vista = new TerminalView();
 		String enter; // solo sirve para hacer enter para que aparezca el siguiente texto
 
-		System.out.println("Despiertas en tu apartamento, como en un día cualquiera.\r\n"
-				+ "Sin embargo, algo está fuera de lugar…\r\n"
-				+ "Luces parpadeantes y distorsiones en la realidad te hacen cuestionar tu entorno.\r\n"
-				+ "De repente, un mensaje aparece en tu pantalla:\r\n" + "");
-
-		System.out.println("Despierta " + name + "...█");
+		/* cuadro texto narrativo */vista.printCharacterDialogue("",
+				"Despiertas en tu apartamento, como en un día cualquiera.Sin embargo, algo está fuera de lugar… Luces parpadeantes y distorsiones en la realidad te hacen cuestionar tu entorno.De repente, un mensaje aparece en tu pantalla:");
 		enter = sc.nextLine();
 
-		System.out.println("De repente, una fuerza invisible te envuelve y te transporta a un lugar desconocido.\r\n"
-				+ "Te encuentras en una habitación bien iluminada, con una figura misteriosa esperándote…\r\n" + "");
+		/* fondo negro */vista.printCharacterDialogue("", "Despierta " + name + "...█");
+
+		enter = sc.nextLine();
+
+		/* cuadro texto narrativo */vista.printCharacterDialogue("",
+				"De repente, una fuerza invisible te envuelve y te transporta a un lugar desconocido. Te encuentras en una habitación bien iluminada, con una figura misteriosa esperándote…");
+
 		enter = sc.nextLine();
 
 		vista.printCharacterDialogue("Morfeo",
@@ -99,23 +100,28 @@ public class Juego {
 			System.out.println("Tomaste la pastilla azul y has decidido seguir viviendo en la ilusión..");
 			System.out.println("¿Pero cuánto tiempo podrás resistir la curiosidad de conocer la verdad?");
 		} else {
-			System.out.println("Tomaste la pastilla roja y has decidido despertar de la ilusión.");
+			/* cuadro texto narrativo */vista.printCharacterDialogue("",
+					"Tomaste la pastilla roja y has decidido despertar de la ilusión.");
+			sc.nextLine();
 			enter = sc.nextLine();
-
 			vista.printCharacterDialogue("Morfeo",
 					"Has elegido sabiamente, Neo. Ahora que has despertado, te revelaré la verdad sobre la Matrix");
 			enter = sc.nextLine();
 
-			System.out.println(
-					"“Morfeo te revela la verdad sobre el mundo en el que vives:\n todo es una simulación creada por máquinas que han esclavizado a la humanidad..”");
-			System.out.println(
-					"“Después de comprender la verdadera naturaleza de tu realidad, decides unirte a la Resistencia,\nun grupo de rebeldes que luchan contra las máquinas y buscan liberar a la humanidad de su control”");
+			/* cuadro texto narrativo */vista.printCharacterDialogue("",
+					"“Morfeo te revela la verdad sobre el mundo en el que vives: Todo es una simulación creada por máquinas que han esclavizado a la humanidad..”");
+			enter = sc.nextLine();
+			/* cuadro texto narrativo */vista.printCharacterDialogue("",
+					"“Después de comprender la verdadera naturaleza de tu realidad, decides unirte a la Resistencia,un grupo de rebeldes que luchan contra las máquinas y buscan liberar a la humanidad de su control”");
+
 			enter = sc.nextLine();
 
 			vista.printCharacterDialogue("Morfeo", name
 					+ " , tu primera misión es obtener tres objetos clave dentro de la Matrix para poder infiltrarse en las instalaciones de seguridad.");
-			System.out.println(
+			enter = sc.nextLine();
+			/* fondo negro */vista.printCharacterDialogue("",
 					"“Los objetos se encuentran en el DISTRITO INDUSTRIAL, el SECTOR RESIDENCIAL, y el NÚCLEO DE LA_CIUDAD...\"");
+
 			game(player);
 		}
 	}
@@ -146,7 +152,7 @@ public class Juego {
 			zone3.generateSmith(Distritos.NÚCLEO_DE_LA_CIUDAD);
 			zone4.generateSmith(Distritos.INSTALACIÓN_DE_SEGURIDAD);
 
-			vista.printZoneSelector();
+			/* fondo negro */vista.printZoneSelector();
 			int selectZoneOption = sc.nextInt();
 
 			Zone selectedZone = null;
@@ -173,14 +179,14 @@ public class Juego {
 				break;
 			case 0:
 				continuarJugando = false;
-				System.out.println("Abandonastes la partida...");
+				/* fondo negro */System.out.println("Abandonastes la partida...");
 				break;
 			default:
 				System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
 			}
 
 			if (selectedZone != null) {
-				System.out.println("Te has adentrado en -" + selectedZone.getName() + "-");
+				/*fondo negro*/vista.printCharacterName("-" + selectedZone.getName() + "-");
 				startBattle(jugador, selectedZone);
 			}
 		}
@@ -204,12 +210,11 @@ public class Juego {
 			} // imprimir una frase del señor smith antes de pelear
 
 			vista.printStartBattle(currentAgent);
-			;
-
+			/*recuerda borrar*/System.out.println(currentAgent.toString());
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
 				vista.printFightVisualizer(jugador, currentAgent);
 				int option = sc.nextInt();
-				handleBattleOption(option, lucha, jugador, vista);
+				handleBattleOption(option, lucha, jugador, vista,currentAgent);
 
 			}
 
@@ -229,10 +234,13 @@ public class Juego {
 		}
 	}
 
-	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista) {
+	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista, Agent agente) {
 		switch (option) {
 		case 1:
 			lucha.fightTurn();
+			/*lucha.printPlayerAttack(jugador, lucha.fightTurn());
+			lucha.printEnemyHealth(agente.getHealth());*/
+			
 			break;
 		case 2:
 			jugador.menuUseItems(jugador);

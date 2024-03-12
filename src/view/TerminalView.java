@@ -84,10 +84,7 @@ public class TerminalView {
 	}
 	
 public void printStartBattle(Agent agent) {
-		
-        System.out.println("¡Batalla iniciada!");
         System.out.println("ENEMIGO: " + agent.getName());
-        System.out.println("¡Prepárate para luchar!");
     }
 
 

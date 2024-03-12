@@ -34,8 +34,13 @@ public class Agent extends Enemy {
 
 	@Override
 	public String toString() {
-		return name + "[droppableItems=" + droppableItems + "]aparitionProbability=" + aparitionProbability;
+		return "Agent [droppableItems=" + droppableItems + ", aparitionProbability=" + aparitionProbability + ", name="
+				+ name + ", maxHealth=" + maxHealth + ", health=" + health + ", strength=" + strength + ", experience="
+				+ experience + "]";
 	}
+
+	
+	
 	
 	
 }
