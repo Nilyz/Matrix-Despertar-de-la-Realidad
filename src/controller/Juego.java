@@ -216,8 +216,6 @@ public class Juego {
 				vista.printCharacterDialogue("Agente Smith", smithStartQuote);
 			} // imprimir una frase del señor smith antes de pelear
 
-			vista.printStartBattle(currentAgent);
-			/* recuerda borrar */System.out.println(currentAgent.toString());
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
 				vista.printFightVisualizer(jugador, currentAgent);
 				int option = sc.nextInt();
@@ -226,8 +224,7 @@ public class Juego {
 			}
 			// Verificar si el jugador sigue con vida antes de imprimir las frases
 			if (jugador.getHealth() > 0) {
-				/* fondo negro */vista.printEnemyDrop(currentAgent);
-				/* fondo negro */System.out.println("Has obetenido " + "+" + currentAgent.getExperience() + " de EXP");
+				vista.getBorderedDialogue(vista.printEnemyDropAndExp(currentAgent));
 				if (currentAgent.getName().equals("Smith")) {
 					Smith smith = (Smith) currentAgent;
 					String smithEndQuote = smith.SmithEndQuote(zone);
@@ -246,10 +243,11 @@ public class Juego {
 	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista, Agent agente) {
 		switch (option) {
 		case 1:
+			//guarda en una variable el daño que va a causar ya que uede ser crítico
 			int danoJugador = lucha.calculatePlayerDamage();
-			lucha.fightTurn(danoJugador);
 			System.out.println("Daño del jugador " + danoJugador);
 			lucha.printEnemyHealth(agente.getHealth());
+			lucha.fightTurn(danoJugador);
 			if (agente.getHealth() > 0) {
 				System.out.println("Daño del enemigo " + agente.getStrength());
 			}
@@ -326,7 +324,7 @@ public class Juego {
 				dron = dron.generateDron(jugador, zone);
 				dron.stealExperience(jugador, dron.getStealExp(), dron);
 				vista.printCharacterDialogue("", dron.dronAparitionString(dron));
-				/* recuerda borrar */System.out.println("Ahora tienes: " + jugador.getExperience());
+				
 			}
 			vista.printEndBattle(noEnemiesRemaining);
 		} else {

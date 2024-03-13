@@ -56,11 +56,12 @@ public class TerminalView {
 
 	}
 
-	public void printEnemyDrop(Agent agente) {
-		if (agente.getDroppableItems().size() > 0) {
-			System.out.println("Obtuvistes " + agente.dropItem().getName());
-		}
-
+	public String printEnemyDropAndExp(Agent agente) {
+	    if (agente.getDroppableItems().size() > 0) {
+	        return "Obtuvistes " + agente.dropItem().getName()+ " y +"+agente.getExperience()+" de EXP";
+	    } else {
+	        return "Obtuvistes " + "+"+agente.getExperience()+" de EXP";
+	    }
 	}
 
 	public void printZoneItemDrop(Zone zone) {
