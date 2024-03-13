@@ -166,7 +166,8 @@ public class Juego {
 				break;
 			case 4:
 				if (jugador.getMissionItems().size() != 3) {
-				/*fondo negro*/vista.printCharacterDialogue("", "Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
+					/* fondo negro */vista.printCharacterDialogue("",
+							"Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
 				} else {
 					selectedZone = zone4;
 				}
@@ -177,22 +178,24 @@ public class Juego {
 			case 0:
 				continuarJugando = false;
 				/* fondo negro */System.out.println("Abandonastes la partida...");
-				/*fondo negro*/vista.printCharacterDialogue("", vista.printGiveUp());
+				/* fondo negro */vista.printCharacterDialogue("", vista.printGiveUp());
 				break;
 			default:
-				/*fondo negro*/vista.printCharacterDialogue("", "Opción inválida. Por favor, selecciona una opción válida.");
+				/* fondo negro */vista.printCharacterDialogue("",
+						"Opción inválida. Por favor, selecciona una opción válida.");
 			}
 			if (selectedZone != null) {
-	            vista.printCharacterName("-" + selectedZone.getName() + "-");
-	            startBattle(jugador, selectedZone);
+				vista.printCharacterName("-" + selectedZone.getName() + "-");
+				startBattle(jugador, selectedZone);
 
-	            // Verificar si el jugador ha obtenido los cuatro objetos clave
-	            if (jugador.getMissionItems().size() == 4) {
-	                vista.printCharacterDialogue(""," “La verdad finalmente ha sido revelada, y la libertad, alcanzada”");
-	                continuarJugando = false; // Terminar el juego
-	            }
-	            
-	        }
+				// Verificar si el jugador ha obtenido los cuatro objetos clave
+				if (jugador.getMissionItems().size() == 4) {
+					vista.printCharacterDialogue("",
+							" “La verdad finalmente ha sido revelada, y la libertad, alcanzada”");
+					continuarJugando = false; // Terminar el juego
+				}
+
+			}
 		}
 
 		sc.close();
@@ -214,24 +217,25 @@ public class Juego {
 			} // imprimir una frase del señor smith antes de pelear
 
 			vista.printStartBattle(currentAgent);
-			/*recuerda borrar*/System.out.println(currentAgent.toString());
+			/* recuerda borrar */System.out.println(currentAgent.toString());
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
 				vista.printFightVisualizer(jugador, currentAgent);
 				int option = sc.nextInt();
-				handleBattleOption(option, lucha, jugador, vista,currentAgent);
+				handleBattleOption(option, lucha, jugador, vista, currentAgent);
 
 			}
 			// Verificar si el jugador sigue con vida antes de imprimir las frases
 			if (jugador.getHealth() > 0) {
-	            vista.printEnemyDrop(currentAgent);
-	            if (currentAgent.getName().equals("Smith")) {
-	                Smith smith = (Smith) currentAgent;
-	                String smithEndQuote = smith.SmithEndQuote(zone);
-	                String palyerEndQuote = jugador.PlayerEndQuote(jugador, zone);
-	                vista.printCharacterDialogue("Agente Smith", smithEndQuote);
-	                vista.printCharacterDialogue(jugador.getName(), palyerEndQuote);
-	            } // imprimir una frase final del señor smith y el jugador después de pelear
-	        }
+				/* fondo negro */vista.printEnemyDrop(currentAgent);
+				/* fondo negro */System.out.println("Has obetenido " + "+" + currentAgent.getExperience() + " de EXP");
+				if (currentAgent.getName().equals("Smith")) {
+					Smith smith = (Smith) currentAgent;
+					String smithEndQuote = smith.SmithEndQuote(zone);
+					String palyerEndQuote = jugador.PlayerEndQuote(jugador, zone);
+					vista.printCharacterDialogue("Agente Smith", smithEndQuote);
+					vista.printCharacterDialogue(jugador.getName(), palyerEndQuote);
+				} // imprimir una frase final del señor smith y el jugador después de pelear
+			}
 
 			cont++;
 			handleEndBattle(cont, zone, jugador, vista, noEnemiesRemaining);
@@ -242,10 +246,14 @@ public class Juego {
 	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista, Agent agente) {
 		switch (option) {
 		case 1:
-			lucha.fightTurn();
-			/*lucha.printPlayerAttack(jugador, lucha.fightTurn());
-			lucha.printEnemyHealth(agente.getHealth());*/
-			
+			int danoJugador = lucha.calculatePlayerDamage();
+			lucha.fightTurn(danoJugador);
+			System.out.println("Daño del jugador " + danoJugador);
+			lucha.printEnemyHealth(agente.getHealth());
+			if (agente.getHealth() > 0) {
+				System.out.println("Daño del enemigo " + agente.getStrength());
+			}
+
 			break;
 		case 2:
 			menuUseItems(jugador);
@@ -255,8 +263,8 @@ public class Juego {
 			jugador.useEXP(jugador);
 			break;
 		case 4:
-			/*fondo negro*/vista.printCharacterDialogue("", "Abandonastes la zona");
-			
+			/* fondo negro */vista.printCharacterDialogue("", "Abandonastes la zona");
+
 			game(jugador);
 		case 5:
 			vista.printCharacterDialogue("", vista.printGiveUp());
@@ -268,75 +276,80 @@ public class Juego {
 	}
 
 	// funcion para usar los items
-		public static void menuUseItems(Player player) {
-			Scanner sc = new Scanner(System.in);
-			TerminalView vista = new TerminalView();
-			ArrayList<Item> playerItems = player.getItems();
-			int choice = -1;
-			/*negro*/vista.printCharacterName("Elige un ítem para usar:");
+	public static void menuUseItems(Player player) {
+		Scanner sc = new Scanner(System.in);
+		TerminalView vista = new TerminalView();
+		ArrayList<Item> playerItems = player.getItems();
+		int choice = -1;
+		/* negro */vista.printCharacterName("Elige un ítem para usar:");
 
-			if (!playerItems.isEmpty()) {
-				while (choice != 0) {
-					// Mostrar los ítems disponibles
-					System.out.println(player.seePlayerItems());
-					System.out.println("\n<0> Salir");
-
-					choice = sc.nextInt();
-
-					if (choice >= 1 && choice <= playerItems.size()) {
-						Item selected = playerItems.get(choice - 1);
-						// Usar el ítem seleccionado
-						player.useItem(player, selected);
-					} else if (choice != 0) {
-						vista.printCharacterName("Selección inválida.");
-					}
-				}
-			} else {
-				System.out.println("No hay ítems disponibles para usar en el inventario del jugador.");
+		if (!playerItems.isEmpty()) {
+			while (choice != 0) {
+				// Mostrar los ítems disponibles
+				// System.out.println(player.seePlayerItems()); esto es lo mismo que lo de vista
+				vista.seePlayerItems(player);
 				System.out.println("<0> Salir");
 
 				choice = sc.nextInt();
+				if (choice >= 1 && choice <= playerItems.size()) {
+					Item selected = playerItems.get(choice - 1);
+					// Usar el ítem seleccionado
+					player.useItem(player, selected);
+				} else if (choice != 0) {
+					vista.printCharacterName("Selección inválida.");
+				}
+			}
+		} else {
+			System.out.println("No hay ítems disponibles para usar en el inventario del jugador.");
+			System.out.println("<0> Salir");
 
-			}
-			if (choice == 0) {
-				// Salir del método
-				return;
-			}
+			choice = sc.nextInt();
+
 		}
+		if (choice == 0) {
+			// Salir del método
+			return;
+		}
+	}
 
-	private static void handleEndBattle(int cont, Zone zone, Player jugador, TerminalView vista,
+	public static void handleEndBattle(int cont, Zone zone, Player jugador, TerminalView vista,
 			boolean noEnemiesRemaining) {
 		if (jugador.getHealth() <= 0) {
 			vista.printCharacterDialogue("", vista.printGiveUp());
 			System.exit(0); // Salir completamente del programa
 		}
+		// 50% de que aparezca un dron
 		int droneProbAparition = (int) (Math.random() * 10) + 1;
 		if (cont < zone.getAgents().size()) {
-			if (droneProbAparition < 6) {
+			if (droneProbAparition < 10) {
 				Dron dron = new Dron();
 				dron = dron.generateDron(jugador, zone);
 				dron.stealExperience(jugador, dron.getStealExp(), dron);
+				vista.printCharacterDialogue("", dron.dronAparitionString(dron));
+				/* recuerda borrar */System.out.println("Ahora tienes: " + jugador.getExperience());
 			}
 			vista.printEndBattle(noEnemiesRemaining);
 		} else {
 			noEnemiesRemaining = true;
 			vista.printEndBattle(noEnemiesRemaining);
+
 			// cuando limpie la zona, se le agregará el item de la misión
+			handleMissionItemAssignment(jugador, zone);
+		}
+	}
 
-			// Verificar primero si el jugador ya tiene el ítem de misión en su lista
-			boolean containsItem = false;
-			for (ZoneItem item : jugador.getMissionItems()) {
-				if (item.getName().equals(zone.getMissionItem().getName())) {
-					containsItem = true;
-				}
+	private static void handleMissionItemAssignment(Player jugador, Zone zone) {
+		// Verificar primero si el jugador ya tiene el ítem de misión en su lista
+		boolean containsItem = false;
+		for (ZoneItem item : jugador.getMissionItems()) {
+			if (item.getName().equals(zone.getMissionItem().getName())) {
+				containsItem = true;
 			}
-
-			// Si el ítem no está en la lista, agrégalo
-			if (!containsItem) {
-				jugador.setMissionItems(zone.getMissionItem());
-				System.out.println("Agregando ítem de misión: " + zone.getMissionItem().getName());
-			}
-
+		}
+		// Si el ítem no está en la lista, agrégalo
+		if (!containsItem) {
+			jugador.setMissionItems(zone.getMissionItem());
+			System.out.println("Agregando ítem de misión: " + zone.getMissionItem().getName());
 		}
 	}
 }

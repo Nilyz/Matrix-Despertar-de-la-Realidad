@@ -23,7 +23,7 @@ public class Player extends Character {
 
 	// Personaje por defecto
 	public Player() {
-		this("Neo", 10, 10, 10, 5, 0);// esta llamando al otro constructor con sus parámetros
+		this("Neo", 40, 90, 10, 5, 0);// esta llamando al otro constructor con sus parámetros
 		this.items = new ArrayList<>();
 		this.missionItems = new ArrayList<>();
 	}
@@ -116,14 +116,12 @@ public class Player extends Character {
 
 	//devuelve una cadena que contenga todos los elementos concatenados
 	public String seePlayerItems() {
-	    StringBuilder itemsString = new StringBuilder();
+	    String itemsString = "";
 	    for (int i = 0; i < items.size(); i++) {
 	        Item item = items.get(i);
-	        itemsString.append("<").append(i + 1).append("> ")
-	                   .append(item.getName()).append(": ")
-	                   .append(item.seeItem()).append("\n");
+	        itemsString += "<" + (i + 1) + "> " + item.getName() + ": " + item.seeItem() + "\n";
 	    }
-	    return itemsString.toString();
+	    return itemsString;
 	}
 
 	

@@ -56,7 +56,6 @@ public class Item {
 	}
 
 	public String seeItem() {
-		System.out.print(name + ": ");
 		if (strength != 0) {
 			return "+" + strength + " Fuerza";
 		} else if (energy != 0) {

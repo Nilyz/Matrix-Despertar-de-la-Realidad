@@ -17,20 +17,17 @@ public class Battle {
 		this.agent = agent;
 	}
 
-	public void fightTurn() {
+	public void fightTurn(int danoJugador) {
 		if (!playerDefeated && !enemyDefeated) {
-			int playerDamage = calculatePlayerDamage(player);
+			
 			int enemyDamage = agent.getStrength();
-			int enemyHP = Math.max(0, agent.getHealth() - playerDamage);
+			int enemyHP = Math.max(0, agent.getHealth() - danoJugador);
 			agent.setHealth(enemyHP);
-			printPlayerAttack(player, playerDamage);
-			printEnemyHealth(enemyHP);
 			if (enemyHP <= 0) {
 				handleEnemyDefeat();
 			} else {
 				int playerHP = Math.max(0, player.getHealth() - enemyDamage);
 				player.setHealth(playerHP);
-				printEnemyAttack(enemyDamage);
 				if (playerHP <= 0) {
 					handlePlayerDefeat();
 				}
@@ -38,13 +35,13 @@ public class Battle {
 		}
 	}
 
-	public int calculatePlayerDamage(Player player) {
+	public int calculatePlayerDamage() {
 		int randomCriticProb = (int) (Math.random() * 20) + 1;
-		if (randomCriticProb < player.getEnergy()) {
+		if (randomCriticProb < this.player.getEnergy()) {
 			System.out.println("Crítico!!");
-			return player.getCritcAttack(true);
+			return this.player.getCritcAttack(true);
 		} else {
-			return player.getCritcAttack(false);
+			return this.player.getCritcAttack(false);
 		}
 	}
 
@@ -62,8 +59,8 @@ public class Battle {
 		playerDefeated = true;
 	}
 
-	public void printPlayerAttack(Player player, int damage) {
-		System.out.println(player.getName() + " ataca al enemigo y causa " + damage + " de daño.");
+	public void printPlayerAttack( int damage) {
+		System.out.println(this.player.getName() + " ataca al enemigo y causa " + damage + " de daño.");
 	}
 
 	public void printEnemyHealth(int health) {

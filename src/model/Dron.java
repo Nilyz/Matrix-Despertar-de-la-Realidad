@@ -56,14 +56,14 @@ public class Dron extends Enemy {
 	}
 
 	public void stealExperience(Player player, int stealExp, Dron dron) {
-		
-	    System.out.println("Tienes: " + player.getExperience());
-	    player.setExperience(player.getExperience() - stealExp);
-	    System.out.println(dron.getName() + " "+this.level+" te descubrió, has perdido " + stealExp + " puntos de experiencia!");
+	    player.setExperience(player.getExperience() - stealExp);	   
 	    if (player.getExperience() < 0) {
 	        player.setExperience(0);
 	    }
-	    System.out.println("Ahora tienes: " + player.getExperience());
+	    
 	}
-
+	public String dronAparitionString(Dron dron) {
+		 return dron.getName() + " "+this.level+" te descubrió, has perdido " + stealExp + " puntos de experiencia!";
+		
+	}
 }
