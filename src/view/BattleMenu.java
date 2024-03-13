@@ -56,6 +56,7 @@ public class BattleMenu extends Menu {
 		String attack = "Fuerza: " + player.getStrength();
 		String energy = "Energia: " + player.getEnergy();
 		String speed = "Suerte: " + player.getLuck();
+		String exp = "EXP: " + player.getExperience();
 
 
 		StringBuilder textBox = new StringBuilder();

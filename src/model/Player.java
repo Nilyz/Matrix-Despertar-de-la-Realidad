@@ -125,13 +125,14 @@ public class Player extends Character {
 	}
 
 	
-	public static void useItem(Player player, Item item) {
-		System.out.println("Usaste el ítem: " + item.getName());
+	public static String useItem(Player player, Item item) {
 		item.useItemStats(player, item);
+		return "Usaste el ítem: " + item.getName();
+		
 	}
 
 	public void seeMissionItens() {
-		System.out.println("Ítems de Misión:");
+		System.out.println("Ítems de Misiones:");
 		for (int i = 0; i < missionItems.size(); i++) {
 			ZoneItem item = missionItems.get(i);
 			System.out.println((i + 1) + ". " + item.getName());

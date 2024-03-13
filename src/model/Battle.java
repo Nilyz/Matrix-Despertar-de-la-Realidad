@@ -36,6 +36,7 @@ public class Battle {
 	}
 
 	public int calculatePlayerDamage() {
+		// la probabilidad de crítico es sobre 20
 		int randomCriticProb = (int) (Math.random() * 20) + 1;
 		if (randomCriticProb < this.player.getEnergy()) {
 			System.out.println("Crítico!!");

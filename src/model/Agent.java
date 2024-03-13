@@ -27,7 +27,7 @@ public class Agent extends Enemy {
 	//el enemigo solo tiene 1 item
 	 public Item dropItem() { 
 		 if (droppableItems.isEmpty()) {
-		        return null; // Devuelve null si no hay ningún ítem dropeable
+		        return null; 
 		    }
 		 return droppableItems.get(0);
 	    }

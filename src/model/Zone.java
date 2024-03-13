@@ -101,23 +101,22 @@ public class Zone {
 		agents.add(smithBoss); // Agregar smithBoss a la lista de Agent
 	}
 
-	// recuerda cambiar luego los stats de los items
 	public static Item generateItem() {
-		Item newItem = new Item("Strength Belt", 5, 0, 0, 0);
-		Item newItem2 = new Item("Enhancement Chips", 0, 10, 0, 0);
-		Item newItem3 = new Item("Speed Boots", 3, 0, 0, 0);
-		Item newItem4 = new Item("Training Book", 0, 0, 8, 0);
-		Item newItem5 = new Item("Energía eléctrica", 0, 0, 0, 9);
-		Item newItem6 = new Item("Training Book", 0, 0, 8, 0);
+		Item newItem = new Item("Strength Belt", 3, 0, 0, 0);
+		Item newItem2 = new Item("Enhancement Chips", 0, 0, 3, 0);
+		Item newItem3 = new Item("Speed Boots", 0, 5, 0, 0);
+		Item newItem4 = new Item("Gafas de sol", 0, 4, 8, 0);
+		Item newItem5 = new Item("Energía eléctrica", 0, 0, 3, 0);
+		Item newItem6 = new Item("Training Book", 0, 3, 0, 0);
 		Item newItem7 = new Item("Mejoras cibernéticas", 0, 0, 8, 0);
-		Item newItem8 = new Item("Suministros médicos", 0, 0, 5, 0);
-		Item newItem9 = new Item("Mejoras de combate", 0, 0, 8, 0);
-		Item newItem10 = new Item("Mejoras genéticas", 1, 0, 0, 0);
-		Item newItem11 = new Item("Traje de vestir elegante", 0, 0, 8, 0);
-		Item newItem12 = new Item("Disfraz de civil", 6, 0, 0, 0);
-		Item newItem13 = new Item("Mochila de supervivencia", 0, 4, 0, 0);
-		Item newItem14 = new Item("Armas de alta tecnología", 0, 0, 0, 5);
-		Item newItem15 = new Item("Botas de acero", 3, 0, 0, 0);
+		Item newItem8 = new Item("Suministros médicos", 0, 0, 0, 10);
+		Item newItem9 = new Item("Mejoras de combate", 6, 0, 0, 0);
+		Item newItem10 = new Item("Mejoras genéticas", 5, 0, 0, 0);
+		Item newItem11 = new Item("Traje de vestir elegante", 0, 0, 5, 0);
+		Item newItem12 = new Item("Disfraz de civil", 0, 3, 0, 0);
+		Item newItem13 = new Item("Mochila de supervivencia", 0, 0, 0, 7);
+		Item newItem14 = new Item("Armas de alta tecnología", 6, 0, 0, 0);
+		Item newItem15 = new Item("Botas de acero", 4, 0, 0, 0);
 
 		Item itemList[] = { newItem, newItem2, newItem3, newItem4, newItem5, newItem6, newItem7, newItem8, newItem9,
 				newItem10, newItem11, newItem12, newItem13, newItem14, newItem15 };

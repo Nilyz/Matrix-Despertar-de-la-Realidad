@@ -68,15 +68,15 @@ public class Juego {
 		TerminalView vista = new TerminalView();
 		String enter; // solo sirve para hacer enter para que aparezca el siguiente texto
 
-		/* cuadro texto narrativo */vista.printCharacterDialogue("",
-				"Despiertas en tu apartamento, como en un día cualquiera.Sin embargo, algo está fuera de lugar… Luces parpadeantes y distorsiones en la realidad te hacen cuestionar tu entorno.De repente, un mensaje aparece en tu pantalla:");
+		vista.getBorderedDialogue("Despiertas en tu apartamento, como en un día cualquiera.Sin embargo, algo está fuera de lugar… Luces parpadeantes y distorsiones en la realidad te hacen cuestionar tu entorno.De repente, un mensaje aparece en tu pantalla:");
+		
 		enter = sc.nextLine();
 
-		/* fondo negro */vista.printCharacterDialogue("", "Despierta " + name + "...█");
+		vista.getBorderedDialogue( "Despierta " + name + "...█");
 
 		enter = sc.nextLine();
 
-		/* cuadro texto narrativo */vista.printCharacterDialogue("",
+		vista.getBorderedDialogue(
 				"De repente, una fuerza invisible te envuelve y te transporta a un lugar desconocido. Te encuentras en una habitación bien iluminada, con una figura misteriosa esperándote…");
 
 		enter = sc.nextLine();
@@ -85,7 +85,7 @@ public class Juego {
 				"Hola " + name + ", como te habrás dado cuenta, las cosas no son lo que parecen.");
 		enter = sc.nextLine();
 
-		vista.printCharacterDialogue("Morfeo", "\"Tengo aquí dos pastillas: una roja y una azul."
+		vista.printCharacterDialogue("Morfeo", "Tengo aquí dos pastillas: una roja y una azul."
 				+ "\"La pastilla roja te abrirá los ojos y te mostrará la verdad, sin filtros ni ilusiones."
 				+ "La pastilla azul te devolverá a tu vida normal, donde podrás seguir creyendo lo que quieras creer."
 				+ "La elección es tuya. ¿Qué pastilla tomarás?");
@@ -98,7 +98,7 @@ public class Juego {
 			System.out.println("Tomaste la pastilla azul y has decidido seguir viviendo en la ilusión..");
 			System.out.println("¿Pero cuánto tiempo podrás resistir la curiosidad de conocer la verdad?");
 		} else {
-			/* cuadro texto narrativo */vista.printCharacterDialogue("",
+			vista.getBorderedDialogue(
 					"Tomaste la pastilla roja y has decidido despertar de la ilusión.");
 			sc.nextLine();
 			enter = sc.nextLine();
@@ -106,10 +106,10 @@ public class Juego {
 					"Has elegido sabiamente, Neo. Ahora que has despertado, te revelaré la verdad sobre la Matrix");
 			enter = sc.nextLine();
 
-			/* cuadro texto narrativo */vista.printCharacterDialogue("",
+			vista.getBorderedDialogue(
 					"“Morfeo te revela la verdad sobre el mundo en el que vives: Todo es una simulación creada por máquinas que han esclavizado a la humanidad..”");
 			enter = sc.nextLine();
-			/* cuadro texto narrativo */vista.printCharacterDialogue("",
+			vista.getBorderedDialogue(
 					"“Después de comprender la verdadera naturaleza de tu realidad, decides unirte a la Resistencia,un grupo de rebeldes que luchan contra las máquinas y buscan liberar a la humanidad de su control”");
 
 			enter = sc.nextLine();
@@ -117,7 +117,7 @@ public class Juego {
 			vista.printCharacterDialogue("Morfeo", name
 					+ " , tu primera misión es obtener tres objetos clave dentro de la Matrix para poder infiltrarte en las instalaciones de seguridad.");
 			enter = sc.nextLine();
-			/* fondo negro */vista.printCharacterDialogue("",
+			vista.getBorderedDialogue(
 					"“Los objetos se encuentran en el DISTRITO INDUSTRIAL, el SECTOR RESIDENCIAL, y el NÚCLEO DE LA_CIUDAD...\"");
 
 			game(player);
@@ -167,7 +167,7 @@ public class Juego {
 			case 4:
 				if (jugador.getMissionItems().size() != 3) {
 					/* fondo negro */vista.printCharacterDialogue("",
-							"Debes obtener los tres ítems clave antes de acceder a las instalaciones de seguridad.");
+							"Debes obtener los tres Objetos clave antes de infintrarte a las instalaciones de seguridad.");
 				} else {
 					selectedZone = zone4;
 				}
@@ -263,8 +263,7 @@ public class Juego {
 			jugador.useEXP(jugador);
 			break;
 		case 4:
-			/* fondo negro */vista.printCharacterDialogue("", "Abandonastes la zona");
-
+			vista.getBorderedDialogue( "Abandonastes la zona");
 			game(jugador);
 		case 5:
 			vista.printCharacterDialogue("", vista.printGiveUp());
@@ -294,7 +293,8 @@ public class Juego {
 				if (choice >= 1 && choice <= playerItems.size()) {
 					Item selected = playerItems.get(choice - 1);
 					// Usar el ítem seleccionado
-					player.useItem(player, selected);
+					/*fondo negro*/vista.printCharacterDialogue("", player.useItem(player, selected));
+					/* negro */vista.printCharacterName("Elige un ítem para usar:");
 				} else if (choice != 0) {
 					vista.printCharacterName("Selección inválida.");
 				}

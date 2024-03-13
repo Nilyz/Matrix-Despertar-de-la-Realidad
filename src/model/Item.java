@@ -68,7 +68,7 @@ public class Item {
 		return "";
 	}
 
-	// para que retorne el stat que tiene
+	// para que retorne el stat que tiene el item y lo sume a los stats actuales que tiene el personaje
 	public void useItemStats(Player player, Item item) {
 		if (strength != 0) {
 			player.setStrength(player.getStrength() + item.getStrength());
