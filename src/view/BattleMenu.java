@@ -5,10 +5,20 @@ import model.Player;
 
 public class BattleMenu extends Menu {
 	public static String getFightVisualizer(int width, Player player, Enemy enemy) {
+		return getFightVisualizer(width, player, enemy, "");
+	}
+
+	public static String getFightVisualizer(int width, Player player, Enemy enemy, String enemyImage) {
 		StringBuilder visualizer = new StringBuilder();
-		// TODO: Enemy image and stats
-		/*String[] enemyVisualizer = {RepositoryASCII.neoArt, getBinaryTextBox("NEO", width/3)};
-		visualizer.append(getColoredString(getBinaryTextBox(enemyVisualizer, width, true))).append("\n");*/
+
+		String[] enemyInfo = { 
+			enemyImage != "" ? enemyImage : "", 
+			enemy.getName() + "\n" + "\n" +
+			"Vida: " + enemy.getHealth() + "\n" +
+			"Fuerza: " + enemy.getStrength() + "\n"
+		};
+
+		visualizer.append(getColoredString(getBorderedTextBox(width, enemyInfo, TEXT_ORIGIN.CENTER))).append("\n");
 
 		visualizer.append(getColoredString(getSpaceLine(width))).append("\n");
 		visualizer.append(getColoredString(getBinaryLine(width))).append("\n");
@@ -38,13 +48,13 @@ public class BattleMenu extends Menu {
 		options.append(getColoredString(getBinaryLine(rightPadding))).append("\n");
 
 		String[] firstLineOptions = { "<1> Atacar", "<2> Usar objetos" };
-		options.append(getBinaryTextBox(firstLineOptions, width)).append("\n");
+		options.append(getBinaryTextBox(width, firstLineOptions)).append("\n");
 
 		String[] secondLineOptions = { "<3> Ver personaje", "<4> Huir" };
-		options.append(getBinaryTextBox(secondLineOptions, width)).append("\n");
+		options.append(getBinaryTextBox(width, secondLineOptions)).append("\n");
 
 		String[] thirdLineOptions = { "<5> Rendirse", "" };
-		options.append(getBinaryTextBox(thirdLineOptions, width)).append("\n");
+		options.append(getBinaryTextBox(width, thirdLineOptions)).append("\n");
 
 		options.append(getColoredString(getBinaryLine(width)));
 
@@ -62,7 +72,7 @@ public class BattleMenu extends Menu {
 		StringBuilder textBox = new StringBuilder();
 
 		String[] stats = { health, attack, speed, energy };
-		textBox.append(getBinaryTextBox(stats, width));
+		textBox.append(getBinaryTextBox(width, stats));
 
 		return textBox.toString();
 	}

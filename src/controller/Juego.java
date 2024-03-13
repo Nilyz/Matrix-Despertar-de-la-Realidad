@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 import model.Zone.Distritos;
 import view.TerminalView;
+import view.RepositoryASCII.ARTS;
 
 public class Juego {
 
@@ -217,7 +218,11 @@ public class Juego {
 			} // imprimir una frase del señor smith antes de pelear
 
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
-				vista.printFightVisualizer(jugador, currentAgent);
+				if (currentAgent.getName().equals("Smith")) {
+					vista.printFightVisualizer(jugador, currentAgent, ARTS.SMITH);
+				} else {
+					vista.printFightVisualizer(jugador, currentAgent);
+				}
 				int option = sc.nextInt();
 				handleBattleOption(option, lucha, jugador, vista, currentAgent);
 

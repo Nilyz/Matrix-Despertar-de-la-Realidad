@@ -46,7 +46,7 @@ public class Menu {
 		return random == 0 ? '0' : '1';
 	}
 
-	public static String getCharLine(char charForLine, int width) {
+	public static String getCharLine(int width, char charForLine) {
 		StringBuilder line = new StringBuilder();
 		for (int i = 0; i < width; i++) {
 			line.append(charForLine);
@@ -55,7 +55,7 @@ public class Menu {
 	}
 
 	public static String getSpaceLine(int width) {
-		return getCharLine(' ', width);
+		return getCharLine(width, ' ');
 	}
 
 	public static String getBinaryLine(int width) {
@@ -113,16 +113,20 @@ public class Menu {
 		return lineText.toString();
 	}
 
-	public static String getBinaryTextBox(String text, int width) {
+	public static enum TEXT_ORIGIN {
+		TOP, CENTER, BOTTOM
+	}
+
+	public static String getBinaryTextBox(int width, String text) {
 		String[] texts = { text };
-		return getBinaryTextBox(texts, width);
+		return getBinaryTextBox(width, texts);
 	}
 
-	public static String getBinaryTextBox(String[] texts, int width) {
-		return getBinaryTextBox(texts, width, false);
+	public static String getBinaryTextBox(int width, String[] texts) {
+		return getBinaryTextBox(width, texts, TEXT_ORIGIN.TOP);
 	}
 
-	public static String getBinaryTextBox(String[] texts, int width, boolean isFromBottom) {
+	public static String getBinaryTextBox(int width, String[] texts, TEXT_ORIGIN direction) {
 		int padding = 4;
 		int widthForEachText = (width - padding) / texts.length;
 
@@ -159,13 +163,21 @@ public class Menu {
 			}
 		}
 
-		if (isFromBottom) {
+		if (direction == TEXT_ORIGIN.BOTTOM) {
 			for (ArrayList<String> line : lines) {
 				while (line.size() < maxLines) {
 					line.add(0, "");
 				}
 			}
+		} else if (direction == TEXT_ORIGIN.CENTER) {
+			for (ArrayList<String> line : lines) {
+				line.add(0, "");
+				if (line.size() < maxLines) {
+					line.add("");
+				}
+			}
 		}
+
 
 		int extraPadding = (width - padding) - (widthForEachText * texts.length);
 
@@ -198,10 +210,14 @@ public class Menu {
 	}
 
 	public static String getBorderedTextBox(int width, String[] texts, char charForLine) {
-		return getBorderedTextBox(width, texts, charForLine, false);
+		return getBorderedTextBox(width, texts, charForLine, TEXT_ORIGIN.TOP);
 	}
 
-	public static String getBorderedTextBox(int width, String[] texts, char charForLine, boolean isFromBottom) {
+	public static String getBorderedTextBox(int width, String[] texts, TEXT_ORIGIN direction) {
+		return getBorderedTextBox(width, texts, ' ', direction);
+	}
+
+	public static String getBorderedTextBox(int width, String[] texts, char charForLine, TEXT_ORIGIN direction) {
 		int padding = 4;
 		int widthForEachText = (width - padding) / texts.length;
 
@@ -216,33 +232,39 @@ public class Menu {
 			if (texts[i].equals("")) {
 				lines[i].add("");
 			} else {
-				String[] words = texts[i].split(" ");
-				StringBuilder lineText = new StringBuilder("");
+				String[] splitText = texts[i].split("\\r?\\n");
+				for (String text : splitText) {
+					String[] words = text.split(" ");
+					StringBuilder lineText = new StringBuilder("");
 
-				int widthForThisText = widthForEachText;
-				for (String word : words) {
-					if (isTerminalCode(word)) {
-						lines[i].add(word);
-						widthForThisText += word.length();
-					} else if (lineText.length() + word.length() < widthForThisText) {
-						lineText.append(word + " ");
-					} else {
-						lines[i].add(lineText.toString());
-						lineText.setLength(0);
-						lineText.append(word + " ");
+					int widthForThisText = widthForEachText;
+					for (String word : words) {
+						if (isTerminalCode(word)) {
+							lines[i].add(word);
+							widthForThisText += word.length();
+						} else if (lineText.length() + word.length() < widthForThisText) {
+							lineText.append(word + " ");
+						} else {
+							lines[i].add(lineText.toString());
+							lineText.setLength(0);
+							lineText.append(word + " ");
+						}
 					}
-				}
-				lines[i].add(lineText.toString());
-				if (lines[i].size() > maxLines) {
-					maxLines = lines[i].size();
+					lines[i].add(lineText.toString());
+					if (lines[i].size() > maxLines) {
+						maxLines = lines[i].size();
+					}
 				}
 			}
 		}
 
-		if (isFromBottom) {
+		if (direction == TEXT_ORIGIN.BOTTOM || direction == TEXT_ORIGIN.CENTER) {
 			for (ArrayList<String> line : lines) {
 				while (line.size() < maxLines) {
 					line.add(0, "");
+					if (direction == TEXT_ORIGIN.CENTER && line.size() < maxLines) {
+						line.add("");
+					}
 				}
 			}
 		}

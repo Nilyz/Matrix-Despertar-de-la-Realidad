@@ -23,7 +23,7 @@ public class DialogueMenu extends Menu {
 		textBox.append(getColoredString(getBinaryLine(width))).append("\n");
 		textBox.append(getFormattedCharacterName(characterName, width)).append("\n");
 
-		textBox.append(getColoredString(getBinaryTextBox(dialogue, width))).append("\n");
+		textBox.append(getColoredString(getBinaryTextBox(width, dialogue))).append("\n");
 
 		textBox.append(getColoredString(getBinaryLine(width))).append("\n");
 		textBox.append(getColoredString(getBinaryLine(width)));

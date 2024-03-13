@@ -2,10 +2,11 @@ package view;
 
 import model.*;
 import model.Zone.Distritos;
+import view.RepositoryASCII.ARTS;
 
 public class TerminalView {
 	public static final int defaultWidth = 100;
-	public int width;
+	private int width;
 
 	public TerminalView() {
 		this.width = defaultWidth;
@@ -32,7 +33,15 @@ public class TerminalView {
 	}
 
 	public void printFightVisualizer(Player player, Enemy enemy) {
-		System.out.println(BattleMenu.getFightVisualizer(width, player, enemy));
+		System.out.println(BattleMenu.getFightVisualizer(width, player, enemy, RepositoryASCII.getArt(ARTS.AGENT)));
+	}
+
+	public void printFightVisualizer(Player player, Enemy enemy, String enemyImage) {
+		System.out.println(BattleMenu.getFightVisualizer(width, player, enemy, enemyImage));
+	}
+
+	public void printFightVisualizer(Player player, Agent agent, ARTS enemyImage) {
+		System.out.println(BattleMenu.getFightVisualizer(width, player, agent, RepositoryASCII.getArt(enemyImage)));
 	}
 
 	public void printSeeCharacterMenu(Player player) {
@@ -65,7 +74,7 @@ public class TerminalView {
 	}
 
 	public void printZoneItemDrop(Zone zone) {
-		System.out.println("\nObtuvistes " + zone.getMissionItem().getName());
+		System.out.println("\nObtuviste " + zone.getMissionItem().getName());
 	}
 
 	public String printGiveUp() {
