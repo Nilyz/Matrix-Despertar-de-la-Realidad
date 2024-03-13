@@ -1,19 +1,24 @@
 package view;
 
 public class RepositoryASCII {
-	// TODO: Check all, logic and others
 	public static enum ARTS {
-		NEO
+		AGENT, MORFEO, SMITH
 	};
+
     public static String getArt(ARTS art) {
         switch (art) {
-            case NEO:
-                return neoArt;
+            case AGENT:
+                return agentArt;
+			case MORFEO:
+				return morfeoArt;
+			case SMITH:
+				return smithArt;
             default:
                 return "";
         }
     }
-	public static String neoArt = 
+
+	public static String agentArt = 
 			  "▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒\n"
 			+ "▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒\n"
 			+ "▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒\n"
@@ -36,22 +41,6 @@ public class RepositoryASCII {
 			+ "▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒\n"
 			+ "▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒";
         
-	public static String neoArtCopy = // Just for tests
-        "⠀⢀⣤⣶⣶⣶⣶⣦⣤⣀⠀\r\n" + 
-        " ⢀⣤⣶⣶⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣦⡀ \r\n" + 
-        " ⢠⣿⣿⣿⣿⣿⠿⣿⣿⣿⣿⠿⠿⢿⣿⣿⣷⡀ \r\n" + 
-        " ⢸⣿⡿⠋⠁⠀⠀⠀⠉⠉⠀⠀⠀⠀⠈⢹⣿⡇⠀\r\n" + 
-        " ⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇ \r\n" + 
-        " ⢸⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡇⠀\r\n" + 
-        " ⢸⣿⣠⣤⣶⣶⣶⣦⣀⣀⣴⣶⣶⣶⣤⣄⣿⡇⡀\r\n" + 
-        " ⣿⣿⣿⠻⣿⣿⣿⣿⣿⠟⠻⣿⣿⣿⣿⣿⠟⣿⣿⣿ \r\n" + 
-        " ⣿⣿⣿⠀⠈⠉⠛⠋⠉⠀⠀⠉⠙⠛⠉⠁⠀⣿⣿⣿ \r\n" + 
-        " ⠙⢿⣿⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⠀⣿⡿⠃ \r\n" + 
-        "⠀⠸⣿⣧⠀⠀⠀⢀⣀⣀⣀⣀⡀⠀⠀⠀⣼⣿⠇ \r\n" + 
-        "⠀⠙⢿⣷⣄⠀⠈⠉⠉⠉⠉⠁⠀⣠⣾⡿⠃ \r\n" + 
-        "⢸⣿⣿⣷⣤⣀⣀⣀⣀⣤⣾⣿⣿⡅ \r\n" + 
-        "⠀⢰⣿⣿⣿⣿⣿⣿⡿⠿⢿⣿⣿⣿⣿⣿⡄ \r\n" + 
-        "⠀⠻⠿⠿⠿⠿⠿⠿⠷⠴⠿⠿⠿⠿⠿⠿⠇ ";
 	public static String morfeoArt=
 			  "▒▒▒▒▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒▒▒▒\n"
 			+ "▒▒▒▒▒▒▒▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▓▒▒▒▒▒▒▒▒▒\n"
