@@ -18,6 +18,10 @@ public class TerminalView {
 	public void printCharacterDialogue(String characterName, String dialogue) {
 		System.out.println(DialogueMenu.getFormattedDialogue(characterName, dialogue, width));
 	}
+	
+	public void getBorderedDialogue(String dialogue) {
+		System.out.println(DialogueMenu.getBorderedTextBox(width, dialogue));
+	}
 
 	public void printCharacterName(String characterName) {
 		System.out.println(DialogueMenu.getFormattedCharacterName(characterName, width));

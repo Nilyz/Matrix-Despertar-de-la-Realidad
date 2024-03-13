@@ -26,6 +26,7 @@ public class Menu {
 	public static final String BOLD = "\u001B[1m";
 	public static final String UNDERLINE = "\u001B[4m";
 
+	// TODO: Change all the methods to order the parameters in the same way (width, text, other parameters)
 	public static boolean isTerminalCode(String text) {
 		if (text.contains(RESET) || text.contains(BLACK) || text.contains(RED) || text.contains(GREEN) || text.contains(YELLOW) || text.contains(BLUE) || text.contains(PURPLE) || text.contains(CYAN) || text.contains(WHITE) || text.contains(BLACK_BACKGROUND) || text.contains(RED_BACKGROUND) || text.contains(GREEN_BACKGROUND) || text.contains(YELLOW_BACKGROUND) || text.contains(BLUE_BACKGROUND) || text.contains(PURPLE_BACKGROUND) || text.contains(CYAN_BACKGROUND) || text.contains(WHITE_BACKGROUND) || text.contains(BOLD) || text.contains(UNDERLINE)) {
 			return true;
@@ -45,12 +46,16 @@ public class Menu {
 		return random == 0 ? '0' : '1';
 	}
 
-	public static String getSpaceLine(int width) {
+	public static String getCharLine(char charForLine, int width) {
 		StringBuilder line = new StringBuilder();
 		for (int i = 0; i < width; i++) {
-			line.append(" ");
+			line.append(charForLine);
 		}
 		return line.toString();
+	}
+
+	public static String getSpaceLine(int width) {
+		return getCharLine(' ', width);
 	}
 
 	public static String getBinaryLine(int width) {
@@ -71,8 +76,7 @@ public class Menu {
 
 		StringBuilder lineText = new StringBuilder();
 
-		lineText.append(BLACK_BACKGROUND + GREEN + BOLD);
-		lineText.append(getBinaryLine(leftPadding));
+		lineText.append(getColoredString(getBinaryLine(leftPadding)));
 
 		lineText.append(RESET).append(BLACK_BACKGROUND + WHITE);
 
@@ -86,6 +90,25 @@ public class Menu {
 		lineText.append(getBinaryLine(rightPadding));
 
 		lineText.append(RESET);
+
+		return lineText.toString();
+	}
+
+	public static String getSpaceLineText(int width, String text) {
+		if (isTerminalCode(text)) {
+			width += 5;
+		}
+
+		int linePadding = width - text.length();
+		int leftPadding = linePadding / 2;
+		int rightPadding = linePadding - leftPadding;
+
+		StringBuilder lineText = new StringBuilder();
+
+		lineText.append(RESET).append(BLACK_BACKGROUND + WHITE);
+		lineText.append(getSpaceLine(leftPadding));
+		lineText.append(text);
+		lineText.append(getSpaceLine(rightPadding));
 
 		return lineText.toString();
 	}
@@ -161,6 +184,89 @@ public class Menu {
 			}
 		}
 
+		return textBox.toString();
+	}
+
+	public static String getBorderedTextBox(int width, String text) {
+		String[] texts = { text };
+		return getBorderedTextBox(width, texts, ' ');
+	}
+
+	public static String getBorderedTextBox(int width, String text, char charForLine) {
+		String[] texts = { text };
+		return getBorderedTextBox(width, texts, charForLine);
+	}
+
+	public static String getBorderedTextBox(int width, String[] texts, char charForLine) {
+		return getBorderedTextBox(width, texts, charForLine, false);
+	}
+
+	public static String getBorderedTextBox(int width, String[] texts, char charForLine, boolean isFromBottom) {
+		int padding = 4;
+		int widthForEachText = (width - padding) / texts.length;
+
+		StringBuilder textBox = new StringBuilder();
+		
+		@SuppressWarnings("unchecked") // El compilador genera un warning por el cast de un array de ArrayList
+		ArrayList<String>[] lines = new ArrayList[texts.length];
+
+		int maxLines = -1;
+		for (int i = 0; i < texts.length; i++) {
+			lines[i] = new ArrayList<>();
+			if (texts[i].equals("")) {
+				lines[i].add("");
+			} else {
+				String[] words = texts[i].split(" ");
+				StringBuilder lineText = new StringBuilder("");
+
+				int widthForThisText = widthForEachText;
+				for (String word : words) {
+					if (isTerminalCode(word)) {
+						lines[i].add(word);
+						widthForThisText += word.length();
+					} else if (lineText.length() + word.length() < widthForThisText) {
+						lineText.append(word + " ");
+					} else {
+						lines[i].add(lineText.toString());
+						lineText.setLength(0);
+						lineText.append(word + " ");
+					}
+				}
+				lines[i].add(lineText.toString());
+				if (lines[i].size() > maxLines) {
+					maxLines = lines[i].size();
+				}
+			}
+		}
+
+		if (isFromBottom) {
+			for (ArrayList<String> line : lines) {
+				while (line.size() < maxLines) {
+					line.add(0, "");
+				}
+			}
+		}
+
+		int extraPadding = (width - padding) - (widthForEachText * texts.length);
+
+		textBox.append(getColoredString(getBinaryLine(width))).append("\n");
+
+		for (int i = 0; i < maxLines; i++) {
+			textBox.append(getColoredString(getRandomBinary() + getSpaceLine(1)));
+			for (int j = 0; j < texts.length; j++) {
+				if (i < lines[j].size()) {
+					textBox.append(getColoredString(getSpaceLineText(widthForEachText, lines[j].get(i))));
+				} else {
+					textBox.append(getColoredString(getSpaceLine(widthForEachText)));
+				}
+			}
+
+			textBox.append(getColoredString(getSpaceLine(1 + extraPadding) + getRandomBinary()));
+
+			textBox.append("\n");
+		}
+
+		textBox.append(getColoredString(getBinaryLine(width)));
 		return textBox.toString();
 	}
 }
