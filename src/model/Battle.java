@@ -60,16 +60,6 @@ public class Battle {
 		playerDefeated = true;
 	}
 
-	public void printPlayerAttack( int damage) {
-		System.out.println(this.player.getName() + " ataca al enemigo y causa " + damage + " de daño.");
-	}
 
-	public void printEnemyHealth(int health) {
-		System.out.println("El enemigo tiene " + health + " de salud.");
-	}
-
-	public void printEnemyAttack(int damage) {
-		System.out.println("El enemigo te ataca y causa " + damage + " de daño.");
-	}
 
 }

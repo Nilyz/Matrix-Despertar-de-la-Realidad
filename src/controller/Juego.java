@@ -17,79 +17,63 @@ public class Juego {
 		Scanner sc = new Scanner(System.in);
 		Player neo = new Player();
 		Player personalized = new Player("", 0, 0, 0, 0, 65);
+		int playerOption = 0;
+		vista.printIntro();
 
-		System.out
-				.println("╔═══════════════════════════════════════════════════════════════════════════════════════╗\r\n"
-						+ "║                                                                                       ║\r\n"
-						+ "║      _____         _                           _                        _             ║\r\n"
-						+ "║     | ____| _ __  | |_  _ __  __ _  _ __    __| |  ___        __ _     | |  __ _      ║\r\n"
-						+ "║     |  _|  | '_ \\ | __|| '__|/ _` || '_ \\  / _` | / _ \\      / _` |    | | / _` |     ║\r\n"
-						+ "║     | |___ | | | || |_ | |  | (_| || | | || (_| || (_) |    | (_| |    | || (_| |     ║\r\n"
-						+ "║     |_____||_| |_| \\__||_|   \\__,_||_| |_| \\__,_| \\___/      \\__,_|    |_| \\__,_|     ║\r\n"
-						+ "║     |  \\/  |  __ _ | |_  _ __ (_)__  __                                               ║\r\n"
-						+ "║     | |\\/| | / _` || __|| '__|| |\\ \\/ /                                               ║\r\n"
-						+ "║     | |  | || (_| || |_ | |   | | >  <  _  _  _                                       ║\r\n"
-						+ "║     |_|  |_| \\__,_| \\__||_|   |_|/_/\\_\\(_)(_)(_)                                      ║\r\n"
-						+ "║                                                                                       ║\r\n"
-						+ "╚═══════════════════════════════════════════════════════════════════════════════════════╝");
-
-		System.out.println("Eres...");
-		System.out.println("<1> Neo");
-		System.out.println("<2> Otro");
-		int playerOption = sc.nextInt();
+		vista.printCharacterSelectionMenu(playerOption);
+		playerOption = sc.nextInt();
 		while (playerOption != 1 && playerOption != 2) {
-			System.out.println("opción inválida, vuelva a intentar");
-			System.out.println("Eres...");
-			System.out.println("<1> Neo");
-			System.out.println("<2> Personalizar");
+
+			vista.printCharacterSelectionMenu(playerOption);
 			playerOption = sc.nextInt();
 		}
 
 		sc.nextLine();
 		if (playerOption == 1) {
-			firstDialog(neo.getName(), neo);
+			firstDialog(neo);
 
 		} else {
-			System.out.println("Por favor, introduce tu nombre:");
+			vista.getBorderedDialogue("Por favor, introduce tu nombre:");
 			personalized.setName(sc.nextLine());
-			System.out.println("Has recibido 65 puntos de experiencia para distribuir.");
+			vista.getBorderedDialogue("Has recibido 65 puntos de experiencia para distribuir.");
 			do {
-				vista.printSeeCharacterMenu(personalized);
+				vista.printStartExpMenu(personalized.getExperience());
 				personalized.useEXP(personalized);
 			} while (personalized.getExperience() > 0);
 
-			firstDialog(personalized.getName(), personalized);
+			firstDialog(personalized);
 
 		}
 
 	}
 
-	public static void firstDialog(String name, Player player) {
+	public static void firstDialog(Player player) {
 		Scanner sc = new Scanner(System.in);
 		TerminalView vista = new TerminalView();
-		String enter; // solo sirve para hacer enter para que aparezca el siguiente texto
 
-		vista.getBorderedDialogue("Despiertas en tu apartamento, como en un día cualquiera.Sin embargo, algo está fuera de lugar… Luces parpadeantes y distorsiones en la realidad te hacen cuestionar tu entorno.De repente, un mensaje aparece en tu pantalla:");
-		
-		enter = sc.nextLine();
+		vista.getBorderedDialogue(
+				"Despiertas en tu apartamento, como en un día cualquiera.Sin embargo, algo está fuera de lugar… Luces parpadeantes y distorsiones en la realidad te hacen cuestionar tu entorno.De repente, un mensaje aparece en tu pantalla:");
 
-		vista.getBorderedDialogue( "Despierta " + name + "...█");
+		sc.nextLine();
 
-		enter = sc.nextLine();
+		vista.getBorderedDialogue("Despierta " + player.getName() + "...█");
+
+		sc.nextLine();
 
 		vista.getBorderedDialogue(
 				"De repente, una fuerza invisible te envuelve y te transporta a un lugar desconocido. Te encuentras en una habitación bien iluminada, con una figura misteriosa esperándote…");
 
-		enter = sc.nextLine();
+		sc.nextLine();
 
-		vista.printCharacterDialogue("Morfeo",
-				"Hola " + name + ", como te habrás dado cuenta, las cosas no son lo que parecen.");
-		enter = sc.nextLine();
+		vista.printCharacterDialogBox(ARTS.MORFEO,
+				"Hola " + player.getName() + ", como te habrás dado cuenta, las cosas no son lo que parecen.");
 
-		vista.printCharacterDialogue("Morfeo", "Tengo aquí dos pastillas: una roja y una azul."
-				+ "\"La pastilla roja te abrirá los ojos y te mostrará la verdad, sin filtros ni ilusiones."
-				+ "La pastilla azul te devolverá a tu vida normal, donde podrás seguir creyendo lo que quieras creer."
-				+ "La elección es tuya. ¿Qué pastilla tomarás?");
+		sc.nextLine();
+
+		vista.printCharacterDialogBox(ARTS.MORFEO, "Tengo aquí dos pastillas: una roja y una azul.\n"
+				+ "\nLa pastilla roja te abrirá los ojos y te mostrará la verdad, sin filtros ni ilusiones.\n"
+				+ "\nLa pastilla azul te devolverá a tu vida normal, donde podrás seguir creyendo lo que quieras creer."
+				+ "\nLa elección es tuya. ¿Qué pastilla tomarás?");
 
 		System.out.println("<1> Tomar pastilla Roja");
 		System.out.println("<2> Tomar pastilla Azul");
@@ -99,25 +83,24 @@ public class Juego {
 			System.out.println("Tomaste la pastilla azul y has decidido seguir viviendo en la ilusión..");
 			System.out.println("¿Pero cuánto tiempo podrás resistir la curiosidad de conocer la verdad?");
 		} else {
-			vista.getBorderedDialogue(
-					"Tomaste la pastilla roja y has decidido despertar de la ilusión.");
+			vista.getBorderedDialogue("Tomaste la pastilla roja y has decidido despertar de la ilusión.");
 			sc.nextLine();
-			enter = sc.nextLine();
-			vista.printCharacterDialogue("Morfeo",
-					"Has elegido sabiamente, Neo. Ahora que has despertado, te revelaré la verdad sobre la Matrix");
-			enter = sc.nextLine();
+
+			vista.printCharacterDialogBox(ARTS.MORFEO, "Has elegido sabiamente " + player.getName()
+					+ ". Ahora que has despertado, te revelaré la verdad sobre la Matrix");
+			sc.nextLine();
 
 			vista.getBorderedDialogue(
 					"“Morfeo te revela la verdad sobre el mundo en el que vives: Todo es una simulación creada por máquinas que han esclavizado a la humanidad..”");
-			enter = sc.nextLine();
+			sc.nextLine();
 			vista.getBorderedDialogue(
 					"“Después de comprender la verdadera naturaleza de tu realidad, decides unirte a la Resistencia,un grupo de rebeldes que luchan contra las máquinas y buscan liberar a la humanidad de su control”");
 
-			enter = sc.nextLine();
+			sc.nextLine();
 
-			vista.printCharacterDialogue("Morfeo", name
-					+ " , tu primera misión es obtener tres objetos clave dentro de la Matrix para poder infiltrarte en las instalaciones de seguridad.");
-			enter = sc.nextLine();
+			vista.printCharacterDialogBox(ARTS.MORFEO, player.getName()
+					+ ", tu primera misión es obtener tres objetos clave dentro de la Matrix para poder infiltrarte en las instalaciones de seguridad.");
+			sc.nextLine();
 			vista.getBorderedDialogue(
 					"“Los objetos se encuentran en el DISTRITO INDUSTRIAL, el SECTOR RESIDENCIAL, y el NÚCLEO DE LA_CIUDAD...\"");
 
@@ -129,7 +112,6 @@ public class Juego {
 	public static void game(Player jugador) {
 		TerminalView vista = new TerminalView();
 		Scanner sc = new Scanner(System.in);
-
 		boolean continuarJugando = true;
 
 		while (continuarJugando) {
@@ -151,7 +133,8 @@ public class Juego {
 			zone3.generateSmith(Distritos.NÚCLEO_DE_LA_CIUDAD);
 			zone4.generateSmith(Distritos.INSTALACIÓN_DE_SEGURIDAD);
 
-			/* fondo negro */vista.printZoneSelector();
+			vista.printZoneSelector();
+			sc.nextLine();
 			int selectZoneOption = sc.nextInt();
 
 			Zone selectedZone = null;
@@ -167,7 +150,7 @@ public class Juego {
 				break;
 			case 4:
 				if (jugador.getMissionItems().size() != 3) {
-					/* fondo negro */vista.printCharacterDialogue("",
+					vista.getBorderedDialogue(
 							"Debes obtener los tres Objetos clave antes de infintrarte a las instalaciones de seguridad.");
 				} else {
 					selectedZone = zone4;
@@ -178,15 +161,15 @@ public class Juego {
 				break;
 			case 0:
 				continuarJugando = false;
-				/* fondo negro */System.out.println("Abandonastes la partida...");
-				/* fondo negro */vista.printCharacterDialogue("", vista.printGiveUp());
+				vista.printCharacterDialogBox(ARTS.HUNTER,
+						"Has cedido ante el implacable dominio de la Matrix. ¿Volverás a desafiarla?");
 				break;
 			default:
-				/* fondo negro */vista.printCharacterDialogue("",
-						"Opción inválida. Por favor, selecciona una opción válida.");
+				vista.getBorderedDialogue("Opción inválida. Por favor, selecciona una opción válida.");
 			}
 			if (selectedZone != null) {
-				vista.printCharacterName("-" + selectedZone.getName() + "-");
+				vista.getBorderedDialogue("-" + selectedZone.getName() + "-");
+				sc.nextLine();
 				startBattle(jugador, selectedZone);
 
 				// Verificar si el jugador ha obtenido los cuatro objetos clave
@@ -213,8 +196,8 @@ public class Juego {
 			Battle lucha = new Battle(jugador, currentAgent);// crea una batalla por cada agente
 			if (currentAgent.getName().equals("Smith")) {
 				Smith smith = (Smith) currentAgent;
-				String smithStartQuote = smith.SmithStartQuote(zone);
-				vista.printCharacterDialogue("Agente Smith", smithStartQuote);
+				vista.printCharacterDialogBox(ARTS.SMITH, smith.SmithStartQuote(zone));
+
 			} // imprimir una frase del señor smith antes de pelear
 
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
@@ -229,13 +212,14 @@ public class Juego {
 			}
 			// Verificar si el jugador sigue con vida antes de imprimir las frases
 			if (jugador.getHealth() > 0) {
-				vista.getBorderedDialogue(vista.printEnemyDropAndExp(currentAgent));
+				vista.printEnemyDropAndExp(currentAgent);
+
 				if (currentAgent.getName().equals("Smith")) {
 					Smith smith = (Smith) currentAgent;
-					String smithEndQuote = smith.SmithEndQuote(zone);
-					String palyerEndQuote = jugador.PlayerEndQuote(jugador, zone);
-					vista.printCharacterDialogue("Agente Smith", smithEndQuote);
-					vista.printCharacterDialogue(jugador.getName(), palyerEndQuote);
+					sc.nextLine();
+					vista.printCharacterDialogBox(ARTS.SMITH, smith.SmithEndQuote(zone));
+					sc.nextLine();
+					vista.printCharacterDialogue(jugador.getName(), jugador.PlayerEndQuote(jugador, zone));
 				} // imprimir una frase final del señor smith y el jugador después de pelear
 			}
 
@@ -248,13 +232,13 @@ public class Juego {
 	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista, Agent agente) {
 		switch (option) {
 		case 1:
-			//guarda en una variable el daño que va a causar ya que uede ser crítico
+			// guarda en una variable el daño que va a causar ya que uede ser crítico
 			int danoJugador = lucha.calculatePlayerDamage();
-			System.out.println("Daño del jugador " + danoJugador);
-			lucha.printEnemyHealth(agente.getHealth());
+
+			vista.printPlayerAttack(jugador, danoJugador);
 			lucha.fightTurn(danoJugador);
 			if (agente.getHealth() > 0) {
-				System.out.println("Daño del enemigo " + agente.getStrength());
+				vista.printEnemyAttack(agente.getStrength());
 			}
 
 			break;
@@ -266,59 +250,48 @@ public class Juego {
 			jugador.useEXP(jugador);
 			break;
 		case 4:
-			vista.getBorderedDialogue( "Abandonastes la zona");
+			vista.getBorderedDialogue("Abandonastes la zona");
 			game(jugador);
 		case 5:
-			vista.printCharacterDialogue("", vista.printGiveUp());
-			System.exit(0); // Salir completamente del programa
+			vista.printCharacterDialogBox(ARTS.HUNTER,
+					"Has cedido ante el implacable dominio de la Matrix. ¿Volverás a desafiarla?");
+			System.exit(0);
 			break;
 		default:
-			System.out.println("Opción inválida. Por favor, selecciona una opción válida.");
+			vista.getBorderedDialogue("Opción inválida. Por favor, selecciona una opción válida.");
 		}
 	}
 
 	// funcion para usar los items
 	public static void menuUseItems(Player player) {
-		Scanner sc = new Scanner(System.in);
-		TerminalView vista = new TerminalView();
-		ArrayList<Item> playerItems = player.getItems();
-		int choice = -1;
-		/* negro */vista.printCharacterName("Elige un ítem para usar:");
-
-		if (!playerItems.isEmpty()) {
-			while (choice != 0) {
-				// Mostrar los ítems disponibles
-				// System.out.println(player.seePlayerItems()); esto es lo mismo que lo de vista
-				vista.seePlayerItems(player);
-				System.out.println("<0> Salir");
-
-				choice = sc.nextInt();
-				if (choice >= 1 && choice <= playerItems.size()) {
-					Item selected = playerItems.get(choice - 1);
-					// Usar el ítem seleccionado
-					/*fondo negro*/vista.printCharacterDialogue("", player.useItem(player, selected));
-					/* negro */vista.printCharacterName("Elige un ítem para usar:");
-				} else if (choice != 0) {
-					vista.printCharacterName("Selección inválida.");
-				}
-			}
-		} else {
-			System.out.println("No hay ítems disponibles para usar en el inventario del jugador.");
-			System.out.println("<0> Salir");
-
-			choice = sc.nextInt();
-
-		}
-		if (choice == 0) {
-			// Salir del método
-			return;
-		}
+	    Scanner sc = new Scanner(System.in);
+	    TerminalView vista = new TerminalView();
+	    ArrayList<Item> playerItems = player.getItems();
+	    int choice = -1;
+	    vista.printCharacterName("Elige un ítem para usar:");
+	    vista.printSeePlayerItems(player);
+	    choice = sc.nextInt();
+	    if (choice >= 1 && choice <= playerItems.size()) {
+	        Item selected = playerItems.get(choice - 1);
+	        // Usar el ítem seleccionado
+	        vista.getBorderedDialogue(player.useItem(player, selected));
+	    } else if (choice != 0) {
+	        vista.printCharacterName("Selección inválida.");
+	    }
+	    if (choice == 0) {
+	        // Salir del método
+	        return;
+	    }
 	}
-
+	
+	
 	public static void handleEndBattle(int cont, Zone zone, Player jugador, TerminalView vista,
 			boolean noEnemiesRemaining) {
+		Scanner sc = new Scanner(System.in);
+
 		if (jugador.getHealth() <= 0) {
-			vista.printCharacterDialogue("", vista.printGiveUp());
+			vista.printCharacterDialogBox(ARTS.HUNTER,
+					"Has cedido ante el implacable dominio de la Matrix. ¿Volverás a desafiarla?");
 			System.exit(0); // Salir completamente del programa
 		}
 		// 50% de que aparezca un dron
@@ -328,13 +301,16 @@ public class Juego {
 				Dron dron = new Dron();
 				dron = dron.generateDron(jugador, zone);
 				dron.stealExperience(jugador, dron.getStealExp(), dron);
-				vista.printCharacterDialogue("", dron.dronAparitionString(dron));
-				
+
+				vista.printDronAparition(dron);
+
 			}
 			vista.printEndBattle(noEnemiesRemaining);
+			sc.nextLine();
 		} else {
 			noEnemiesRemaining = true;
 			vista.printEndBattle(noEnemiesRemaining);
+			sc.nextLine();
 
 			// cuando limpie la zona, se le agregará el item de la misión
 			handleMissionItemAssignment(jugador, zone);
@@ -342,6 +318,7 @@ public class Juego {
 	}
 
 	private static void handleMissionItemAssignment(Player jugador, Zone zone) {
+		TerminalView vista = new TerminalView();
 		// Verificar primero si el jugador ya tiene el ítem de misión en su lista
 		boolean containsItem = false;
 		for (ZoneItem item : jugador.getMissionItems()) {
@@ -352,7 +329,7 @@ public class Juego {
 		// Si el ítem no está en la lista, agrégalo
 		if (!containsItem) {
 			jugador.setMissionItems(zone.getMissionItem());
-			System.out.println("Agregando ítem de misión: " + zone.getMissionItem().getName());
+			vista.printZoneItemDrop(zone);
 		}
 	}
 }

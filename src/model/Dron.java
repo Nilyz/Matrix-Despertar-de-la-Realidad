@@ -47,7 +47,7 @@ public class Dron extends Enemy {
 	    } else if (zone.getName().equals("INSTALACIÓN DE SEGURIDAD")) {
 	        droneLevel = (int) (Math.random() * 15) + 10;
 	    }
-	    int stealExp = calculateHowMuchExp(droneLevel);
+	    stealExp = calculateHowMuchExp(droneLevel);
 	    return new Dron("Dron de Vigilancia de nivel ", 5, 10, stealExp, droneLevel);
 	}
 
@@ -62,8 +62,5 @@ public class Dron extends Enemy {
 	    }
 	    
 	}
-	public String dronAparitionString(Dron dron) {
-		 return dron.getName() + " "+this.level+" te descubrió, has perdido " + stealExp + " puntos de experiencia!";
-		
-	}
+	
 }
