@@ -9,7 +9,7 @@ import model.Zone.Distritos;
 import view.TerminalView;
 import view.RepositoryASCII.ARTS;
 
-public class Juego {
+public class Game {
 
 	// función para seleccionar personaje
 	public static void startGame() {
@@ -17,7 +17,7 @@ public class Juego {
 		Scanner sc = new Scanner(System.in);
 		Player neo = new Player();
 		Player personalized = new Player("", 0, 0, 0, 0, 65);
-		int playerOption = 0;
+		int playerOption = 1;
 		vista.printIntro();
 
 		vista.printCharacterSelectionMenu(playerOption);
@@ -80,8 +80,7 @@ public class Juego {
 		int option;
 		option = sc.nextInt();
 		if (option == 2) {
-			System.out.println("Tomaste la pastilla azul y has decidido seguir viviendo en la ilusión..");
-			System.out.println("¿Pero cuánto tiempo podrás resistir la curiosidad de conocer la verdad?");
+			vista.printCharacterDialogBox(ARTS.HUNTER, "Tomaste la pastilla azul y has decidido seguir viviendo en la ilusión...\n¿Pero cuánto tiempo podrás resistir la curiosidad de conocer la verdad?");
 		} else {
 			vista.getBorderedDialogue("Tomaste la pastilla roja y has decidido despertar de la ilusión.");
 			sc.nextLine();
@@ -134,7 +133,8 @@ public class Juego {
 			zone4.generateSmith(Distritos.INSTALACIÓN_DE_SEGURIDAD);
 
 			vista.printZoneSelector();
-			sc.nextLine();
+			
+
 			int selectZoneOption = sc.nextInt();
 
 			Zone selectedZone = null;
@@ -149,20 +149,30 @@ public class Juego {
 				selectedZone = zone3;
 				break;
 			case 4:
+			{
 				if (jugador.getMissionItems().size() != 3) {
 					vista.getBorderedDialogue(
 							"Debes obtener los tres Objetos clave antes de infintrarte a las instalaciones de seguridad.");
 				} else {
 					selectedZone = zone4;
 				}
+			}
+				
 				break;
 			case 5:
-				jugador.seeMissionItens();
+			{				
+				jugador.seeMissionItems(jugador);
+				sc.nextLine();
+				sc.nextLine();
+			}
 				break;
 			case 0:
+			{
 				continuarJugando = false;
 				vista.printCharacterDialogBox(ARTS.HUNTER,
 						"Has cedido ante el implacable dominio de la Matrix. ¿Volverás a desafiarla?");
+			}
+				
 				break;
 			default:
 				vista.getBorderedDialogue("Opción inválida. Por favor, selecciona una opción válida.");
@@ -174,8 +184,8 @@ public class Juego {
 
 				// Verificar si el jugador ha obtenido los cuatro objetos clave
 				if (jugador.getMissionItems().size() == 4) {
-					vista.printCharacterDialogue("",
-							" “La verdad finalmente ha sido revelada, y la libertad, alcanzada”");
+					System.out.println();
+					vista.getBorderedDialogue("\n“La verdad finalmente ha sido revelada, y la libertad, alcanzada”\n");
 					continuarJugando = false; // Terminar el juego
 				}
 
@@ -196,8 +206,7 @@ public class Juego {
 			Battle lucha = new Battle(jugador, currentAgent);// crea una batalla por cada agente
 			if (currentAgent.getName().equals("Smith")) {
 				Smith smith = (Smith) currentAgent;
-				vista.printCharacterDialogBox(ARTS.SMITH, smith.SmithStartQuote(zone));
-
+				vista.printCharacterDialogBox(ARTS.SMITH, smith.SmithStartQuote(zone,jugador));
 			} // imprimir una frase del señor smith antes de pelear
 
 			while (jugador.getHealth() > 0 && currentAgent.getHealth() > 0) {
@@ -208,27 +217,24 @@ public class Juego {
 				}
 				int option = sc.nextInt();
 				handleBattleOption(option, lucha, jugador, vista, currentAgent);
-
 			}
 			// Verificar si el jugador sigue con vida antes de imprimir las frases
 			if (jugador.getHealth() > 0) {
 				vista.printEnemyDropAndExp(currentAgent);
-
 				if (currentAgent.getName().equals("Smith")) {
 					Smith smith = (Smith) currentAgent;
 					sc.nextLine();
-					vista.printCharacterDialogBox(ARTS.SMITH, smith.SmithEndQuote(zone));
+					vista.printCharacterDialogBox(ARTS.SMITH, smith.SmithEndQuote(zone, jugador));
 					sc.nextLine();
 					vista.printCharacterDialogue(jugador.getName(), jugador.PlayerEndQuote(jugador, zone));
 				} // imprimir una frase final del señor smith y el jugador después de pelear
 			}
-
 			cont++;
 			handleEndBattle(cont, zone, jugador, vista, noEnemiesRemaining);
-
 		}
 	}
 
+	
 	private static void handleBattleOption(int option, Battle lucha, Player jugador, TerminalView vista, Agent agente) {
 		switch (option) {
 		case 1:
@@ -240,7 +246,6 @@ public class Juego {
 			if (agente.getHealth() > 0) {
 				vista.printEnemyAttack(agente.getStrength());
 			}
-
 			break;
 		case 2:
 			menuUseItems(jugador);
@@ -262,28 +267,29 @@ public class Juego {
 		}
 	}
 
+	
 	// funcion para usar los items
 	public static void menuUseItems(Player player) {
-	    Scanner sc = new Scanner(System.in);
-	    TerminalView vista = new TerminalView();
-	    ArrayList<Item> playerItems = player.getItems();
-	    int choice = -1;
-	    vista.printCharacterName("Elige un ítem para usar:");
-	    vista.printSeePlayerItems(player);
-	    choice = sc.nextInt();
-	    if (choice >= 1 && choice <= playerItems.size()) {
-	        Item selected = playerItems.get(choice - 1);
-	        // Usar el ítem seleccionado
-	        vista.getBorderedDialogue(player.useItem(player, selected));
-	    } else if (choice != 0) {
-	        vista.printCharacterName("Selección inválida.");
-	    }
-	    if (choice == 0) {
-	        // Salir del método
-	        return;
-	    }
+		Scanner sc = new Scanner(System.in);
+		TerminalView vista = new TerminalView();
+		ArrayList<Item> playerItems = player.getItems();
+		int choice = -1;
+		vista.printCharacterName("Elige un ítem para usar:");
+		vista.printSeePlayerItems(player);
+		choice = sc.nextInt();
+		if (choice >= 1 && choice <= playerItems.size()) {
+			Item selected = playerItems.get(choice - 1);
+			// Usar el ítem seleccionado
+			vista.getBorderedDialogue(player.useItem(player, selected));
+		} else if (choice != 0) {
+			vista.printCharacterName("Selección inválida.");
+		}
+		if (choice == 0) {
+			// Salir del método
+			return;
+		}
 	}
-	
+
 	
 	public static void handleEndBattle(int cont, Zone zone, Player jugador, TerminalView vista,
 			boolean noEnemiesRemaining) {
@@ -317,6 +323,7 @@ public class Juego {
 		}
 	}
 
+	
 	private static void handleMissionItemAssignment(Player jugador, Zone zone) {
 		TerminalView vista = new TerminalView();
 		// Verificar primero si el jugador ya tiene el ítem de misión en su lista

@@ -131,12 +131,12 @@ public class Player extends Character {
 		
 	}
 
-	public void seeMissionItens() {
-		System.out.println("Ítems de Misiones:");
-		for (int i = 0; i < missionItems.size(); i++) {
-			ZoneItem item = missionItems.get(i);
-			System.out.println((i + 1) + ". " + item.getName());
-		}
+	public void seeMissionItems(Player player) {
+	    System.out.println("Ítems de Misiones:");
+	    for (int i = 0; i < player.getMissionItems().size(); i++) {
+	        ZoneItem item = player.getMissionItems().get(i);
+	        System.out.println((i + 1) + ". " + item.getName());
+	    }
 	}
 
 	// calcular el crítico

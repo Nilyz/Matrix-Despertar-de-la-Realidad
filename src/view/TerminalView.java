@@ -52,11 +52,13 @@ public class TerminalView {
 	}
 
 	public void printCharacterSelectionMenu(int playerOption) {
+		
 		if (playerOption != 1 && playerOption != 2) {
-			System.out.println("Opción inválida, vuelva a intentar");
+			
+			System.out.println(DialogueMenu.getBorderedTextBox(width, "\nOpción inválida, vuelva a intentar"));
 		}
-
-		System.out.println("Eres...");
+		System.out.println();
+		System.out.println(DialogueMenu.getBorderedTextBox(width, "Eres..."));
 		System.out.println("<1> Neo");
 		System.out.println("<2> Otro");
 	}
@@ -126,7 +128,7 @@ public class TerminalView {
 	}
 
 	public void printZoneItemDrop(Zone zone) {
-		System.out.println(BattleMenu.getBorderedTextBox(width,"\nLa misión fue todo un éxito, has conseguido: " + zone.getMissionItem().getName()));
+		System.out.println(BattleMenu.getBorderedTextBox(width,"La misión fue todo un éxito, has conseguido: " + zone.getMissionItem().getName()));
 	}
 
 	

@@ -64,17 +64,6 @@ public abstract class Character {
 		this.experience = experience;
 	}
 
-	/* Metodos especificos */
-
-	
-
-
-	@Override
-	public String toString() {
-		return "Character [name=" + name + ", maxHealth=" + maxHealth + ", health=" + health + ", strength=" + strength
-				+ ", experience=" + experience + "]";
-	}
-
 
 
 	

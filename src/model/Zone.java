@@ -77,7 +77,7 @@ public class Zone {
 			int enemyStrength = (int) (Math.random() * 15) + 1;
 			int enemyEnergy = (int) (Math.random() * 20) + 1;
 			int enemyExp = (int) (Math.random() * 10) + 1;
-			int dropProb = (int) (Math.random() * 10) + 1;
+			int dropProb = (int) (Math.random() * 15) + 1;
 			Agent agente = new Agent(enemyName, enemyHP, enemyStrength, enemyEnergy, enemyExp, 0);
 
 			if (dropProb <= player.getLuck()) {
@@ -102,13 +102,13 @@ public class Zone {
 	}
 
 	public static Item generateItem() {
-		Item newItem = new Item("Strength Belt", 3, 0, 0, 0);
-		Item newItem2 = new Item("Enhancement Chips", 0, 0, 3, 0);
-		Item newItem3 = new Item("Speed Boots", 0, 5, 0, 0);
-		Item newItem4 = new Item("Gafas de sol", 0, 4, 8, 0);
+		Item newItem = new Item("Cinturón de fuerza", 3, 0, 0, 0);
+		Item newItem2 = new Item("Chip de mejora", 0, 0, 3, 0);
+		Item newItem3 = new Item("Botas para correr", 0, 5, 0, 0);
+		Item newItem4 = new Item("Gafas de sol", 0, 4, 0, 0);
 		Item newItem5 = new Item("Energía eléctrica", 0, 0, 3, 0);
-		Item newItem6 = new Item("Training Book", 0, 3, 0, 0);
-		Item newItem7 = new Item("Mejoras cibernéticas", 0, 0, 8, 0);
+		Item newItem6 = new Item("Libro de entrenamientp", 0, 3, 0, 0);
+		Item newItem7 = new Item("Mejoras cibernéticas", 0, 0, 2, 0);
 		Item newItem8 = new Item("Suministros médicos", 0, 0, 0, 10);
 		Item newItem9 = new Item("Mejoras de combate", 6, 0, 0, 0);
 		Item newItem10 = new Item("Mejoras genéticas", 5, 0, 0, 0);

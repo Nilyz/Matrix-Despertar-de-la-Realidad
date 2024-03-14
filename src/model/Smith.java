@@ -20,16 +20,16 @@ public class Smith extends Agent {
 		this.level = level;
 	}
 
-	public String SmithStartQuote(Zone zone) {
+	public String SmithStartQuote(Zone zone, Player player) {
 		if (name.equals("Smith")) {
 			if (zone.getName().equals("DISTRITO INDUSTRIAL")) {
-				return "La humanidad es una plaga, Mr. Anderson, y nosotros somos la cura.\"";
+				return "La humanidad es una plaga, Mr." +player.getName()+", y nosotros somos la cura.\"";
 			} else if (zone.getName().equals("SECTOR RESIDENCIAL")) {
-				return "¿Has oído eso, Mr. Anderson? Es el sonido de la inevitabilidad. Es el sonido de tu muerte.\"";
+				return "¿Has oído eso, Mr."+player.getName()+"? Es el sonido de la inevitabilidad. Es el sonido de tu muerte.\"";
 			} else if (zone.getName().equals("NÚCLEO DE LA CIUDAD")) {
-				return "No, Mr. Anderson. Es la libertad la que ha fallado. La humanidad es un desastre, una plaga.\"";
+				return "No, "+player.getName()+". Es la libertad la que ha fallado. La humanidad es un desastre, una plaga.\"";
 			} else if (zone.getName().equals("INSTALACIÓN DE SEGURIDAD")) {
-				return "¿Por qué, Sr. Anderson? ¿Por qué? ¿Por qué, por qué, por qué hacemos esto? ¿Por qué seguimos luchando? ¿Sabes por qué estamos aquí? ¿Te has preguntado alguna vez?\"";
+				return "¿Por qué, Sr." +player.getName()+"? ¿Por qué? ¿Por qué, por qué, por qué hacemos esto? ¿Por qué seguimos luchando? ¿Sabes por qué estamos aquí? ¿Te has preguntado alguna vez?\"";
 			} else {
 				return "";
 			}
@@ -38,16 +38,16 @@ public class Smith extends Agent {
 		}
 	}
 
-	public String SmithEndQuote(Zone zone) {
+	public String SmithEndQuote(Zone zone, Player player) {
 		if (name.equals("Smith")) {
 			if (zone.getName().equals("DISTRITO INDUSTRIAL")) {
-				return "Sr.Neo, siempre tan persistente,ríndete. La Matrix siempre encuentra una forma de reajustarse, y tú no eres más que un insecto en su red.";
+				return "Sr."+player.getName()+", siempre tan persistente,ríndete. La Matrix siempre encuentra una forma de reajustarse, y tú no eres más que un insecto en su red.";
 			} else if (zone.getName().equals("SECTOR RESIDENCIAL")) {
-				return "Sr.Neo, siempre vuelves. Pero tu resistencia es inútil. La Matrix siempre encontrará una forma de mantenerte bajo su control.";
+				return "Sr."+player.getName()+", siempre vuelves. Pero tu resistencia es inútil. La Matrix siempre encontrará una forma de mantenerte bajo su control.";
 			} else if (zone.getName().equals("NÚCLEO DE LA CIUDAD")) {
-				return "Neo, siempre tan obstinado. La Matrix es eterna y tu rebelión está condenada al fracaso.";
+				return player.getName()+", siempre tan obstinado. La Matrix es eterna y tu rebelión está condenada al fracaso.";
 			} else if (zone.getName().equals("INSTALACIÓN DE SEGURIDAD")) {
-				return "Neo, tu rebelión es inútil. La Matrix siempre prevalecerá.";
+				return "Tu victoria es temporal, "+player.getName()+". La Matrix siempre encontrará una forma de reconstruirse. Pero recuerda, aunque puedas ganar batallas, nunca podrás vencer la inevitabilidad de su control.";
 			} else {
 				return "";
 			}
