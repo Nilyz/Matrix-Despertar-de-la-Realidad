@@ -23,7 +23,7 @@ public class Player extends Character {
 
 	// Personaje por defecto
 	public Player() {
-		this("Neo", 40, 90, 10, 5, 0);// esta llamando al otro constructor con sus parámetros
+		this("Neo", 40, 10, 10, 5, 0);// esta llamando al otro constructor con sus parámetros
 		this.items = new ArrayList<>();
 		this.missionItems = new ArrayList<>();
 	}
